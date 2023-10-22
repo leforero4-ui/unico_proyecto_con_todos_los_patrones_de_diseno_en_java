@@ -18,7 +18,7 @@ creacional
 
 * prototype: para clonar los soldados cuando se está creando los villanos por niveles
 
-* abstract factory: para crear el juego por armada: terrestre, nava, o area
+* abstract factory: para crear el juego por armada: terrestre, naval, o aérea
 
 
 estructural
