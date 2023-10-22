@@ -4,12 +4,12 @@ import java.util.List;
 
 import main.application.driven.port.provider.Drawable;
 
-public class Squadron implements Enemy {
+public class SquadronNaval implements Enemy {
 	
 	private final List<Enemy> squadron;
 	private final Drawable drawable;
 	
-	public Squadron(List<Enemy> squadron, final Drawable drawable) {
+	public SquadronNaval(final List<Enemy> squadron, final Drawable drawable) {
 		this.squadron = squadron;
 		this.drawable = drawable;
 	}
@@ -34,11 +34,11 @@ public class Squadron implements Enemy {
 
 	@Override
 	public void draw() {
-		this.drawable.out("Init squadron:");
+		this.drawable.out("Init squadron naval:");
 		for (Enemy enemy : this.squadron) {
 			enemy.draw();
 		}
-		this.drawable.out("End squadron.");
+		this.drawable.out("End squadron naval.");
 	}
 
 	@Override

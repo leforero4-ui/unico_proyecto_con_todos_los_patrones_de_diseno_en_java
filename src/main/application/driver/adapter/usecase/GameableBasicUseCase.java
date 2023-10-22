@@ -5,6 +5,7 @@ import java.util.List;
 import main.application.driven.port.provider.Drawable;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.GameableUseCase;
+import main.domain.model.ArmyFactory;
 import main.domain.model.Enemy;
 import main.domain.model.Player;
 import main.domain.model.PlayerBuilder;
@@ -12,11 +13,13 @@ import main.domain.model.PlayerBuilder;
 public class GameableBasicUseCase implements GameableUseCase {
 	
 	private final Drawable drawable;
+	private final ArmyFactory armyFactory;
 	private final EnemyMethod enemyMethod;
 	
-	public GameableBasicUseCase(final Drawable drawable) {
+	public GameableBasicUseCase(final ArmyFactory armyFactory, final Drawable drawable) {
 		this.drawable = drawable;
-		this.enemyMethod = new EnemyBasicMethod(this.drawable);
+		this.armyFactory = armyFactory;
+		this.enemyMethod = new EnemyBasicMethod(this.armyFactory, this.drawable);
 	}
 
 	@Override

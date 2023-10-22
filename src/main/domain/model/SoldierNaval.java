@@ -2,19 +2,20 @@ package main.domain.model;
 
 import main.application.driven.port.provider.Drawable;
 
-public class SoldierEnemy implements Enemy {
+public class SoldierNaval implements Soldier {
 	private int life;
 	private int attackLevel;
 	private final Drawable drawable;
 
-	public SoldierEnemy(final int life, final int attackLevel, final Drawable drawable) {
+	public SoldierNaval(final int life, final int attackLevel, final Drawable drawable) {
 		this.life = life;
 		this.attackLevel = attackLevel;
 		this.drawable = drawable;
 	}
 
-	public SoldierEnemy clone() {
-		return new SoldierEnemy(this.life, this.attackLevel, this.drawable);
+	@Override
+	public SoldierNaval clone() {
+		return new SoldierNaval(this.life, this.attackLevel, this.drawable);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class SoldierEnemy implements Enemy {
 
 	@Override
 	public void draw() {
-		this.drawable.out("SoldierEnemy [life=" + life + ", attackLevel=" + attackLevel + "]");
+		this.drawable.out("SoldierNaval [life=" + life + ", attackLevel=" + attackLevel + "]");
 	}
 
 	@Override

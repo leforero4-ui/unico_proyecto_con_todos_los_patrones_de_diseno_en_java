@@ -3,22 +3,22 @@ package main.domain.model;
 import main.application.driven.port.provider.Drawable;
 import main.domain.exception.CreationSupremeEnemyException;
 
-public class SupremeEnemy implements Enemy {
+public class SupremeAir implements Enemy {
 	private int life;
 	private int attackLevel;
 	private final Drawable drawable;
 	
-	private static SupremeEnemy instance;
+	private static SupremeAir instance;
 	
-	private SupremeEnemy(final Drawable drawable) {
+	private SupremeAir(final Drawable drawable) {
 		this.life = 200;
 		this.attackLevel = 15;
 		this.drawable = drawable;
 	}
 	
-	public static SupremeEnemy getInstance(final Drawable drawable) {
+	public static SupremeAir getInstance(final Drawable drawable) {
 		if(instance == null) {
-			instance = new SupremeEnemy(drawable);
+			instance = new SupremeAir(drawable);
 		} else if (instance.drawable != drawable) {
 			throw new CreationSupremeEnemyException();
 		}
@@ -38,7 +38,7 @@ public class SupremeEnemy implements Enemy {
 
 	@Override
 	public void draw() {
-		this.drawable.out("SupremeEnemy [life=" + life + ", attackLevel=" + attackLevel + "]");
+		this.drawable.out("SupremeAir [life=" + life + ", attackLevel=" + attackLevel + "]");
 	}
 
 	@Override

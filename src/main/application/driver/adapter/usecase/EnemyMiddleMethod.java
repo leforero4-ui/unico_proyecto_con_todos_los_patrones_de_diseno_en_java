@@ -9,12 +9,12 @@ import main.domain.model.ArmyFactory;
 import main.domain.model.Enemy;
 import main.domain.model.Soldier;
 
-public class EnemyBasicMethod implements EnemyMethod {
+public class EnemyMiddleMethod implements EnemyMethod {
 	
 	private final Drawable drawable;
 	private final ArmyFactory armyFactory;
 
-	public EnemyBasicMethod(final ArmyFactory armyFactory, Drawable drawable) {
+	public EnemyMiddleMethod(final ArmyFactory armyFactory, Drawable drawable) {
 		this.drawable = drawable;
 		this.armyFactory = armyFactory;
 	}
@@ -33,7 +33,26 @@ public class EnemyBasicMethod implements EnemyMethod {
 		for (int created = 1; created <= quantitySoldiers; created++) {
 			enemies.add(soldierEnemyBase.clone());
 		}
-
+		
+		// infantry
+        final int quantitySquadron = 2;
+        final int quantitySoldiersForSquadron = 3;
+        final int quantitySoldiersInSquadron = 3;
+		final List<Enemy> squadronsAndSoldiers = new ArrayList<Enemy>();
+		for (int createdSquadron = 1; createdSquadron <= quantitySquadron; createdSquadron++) {
+			final List<Enemy> soldiers = new ArrayList<Enemy>();
+			for (int created = 1; created <= quantitySoldiersForSquadron; created++) {
+				soldiers.add(soldierEnemyBase.clone());
+			}
+			final Enemy squadron = armyFactory.createSquadron(soldiers, drawable);
+			squadronsAndSoldiers.add(squadron);
+		}
+		for (int created = 1; created <= quantitySoldiersInSquadron; created++) {
+			squadronsAndSoldiers.add(soldierEnemyBase.clone());
+		}
+		final Enemy infantry = armyFactory.createSquadron(squadronsAndSoldiers, drawable);
+		enemies.add(infantry);
+		
 		// supreme
 		enemies.add(armyFactory.getSupreme(drawable));
 		
