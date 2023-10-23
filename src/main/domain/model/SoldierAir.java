@@ -3,11 +3,13 @@ package main.domain.model;
 import main.application.driven.port.provider.Drawable;
 
 public class SoldierAir implements Soldier {
+	private final Clothe clothe;
 	private int life;
 	private int attackLevel;
 	private final Drawable drawable;
 
 	public SoldierAir(final int life, final int attackLevel, final Drawable drawable) {
+		this.clothe = ClotheFactory.getClothe("clothe soldier air", "lentes oscuros", "corto", "manga larga", "largos", "botas");
 		this.life = life;
 		this.attackLevel = attackLevel;
 		this.drawable = drawable;
@@ -16,6 +18,31 @@ public class SoldierAir implements Soldier {
 	@Override
 	public SoldierAir clone() {
 		return new SoldierAir(this.life, this.attackLevel, this.drawable);
+	}
+
+	@Override
+	public String getTypeEye() {
+		return this.clothe.getTypeEye();
+	}
+
+	@Override
+	public String getTypeHair() {
+		return this.clothe.getTypeHair();
+	}
+
+	@Override
+	public String getTypeShirt() {
+		return this.clothe.getTypeShirt();
+	}
+
+	@Override
+	public String getTypePant() {
+		return this.clothe.getTypePant();
+	}
+
+	@Override
+	public String getTypeShoes() {
+		return this.clothe.getTypeShoes();
 	}
 
 	@Override
