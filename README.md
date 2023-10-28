@@ -28,3 +28,5 @@ estructural
 * flyweight: compartir la ropa de los soldados (estado intrinseco/extrinseco)
 
 * facade: interface expuesta a las aplicaciones, en este caso la clase Controller.java
+
+* adapter: usar librerias externas como Lanterna para dibujar en consola

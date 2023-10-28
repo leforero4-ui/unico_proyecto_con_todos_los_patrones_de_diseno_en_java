@@ -7,12 +7,12 @@ import main.domain.model.ArmyAirFactory;
 import main.domain.model.ArmyFactory;
 import main.domain.model.ArmyNavalFactory;
 import main.infrastructure.controller.Controller;
-import main.infrastructure.driven.adapter.provider.ConsoleDrawable;
+import main.infrastructure.driven.adapter.provider.LanternaDrawable;
 
 public class Patrones {
 
 	public static void main(String[] args) {
-		final Drawable drawable = new ConsoleDrawable();
+		final Drawable drawable = new LanternaDrawable();
 
 		final ArmyFactory armyFactory;
 		if(drawable.in("naval oprima: 1\r\nair oprima: cualquier tecla") == "1") {
