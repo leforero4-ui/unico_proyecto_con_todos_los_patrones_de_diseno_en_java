@@ -5,21 +5,18 @@ import java.util.List;
 import main.application.driven.port.provider.Drawable;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.GameableUseCase;
-import main.domain.model.ArmyFactory;
 import main.domain.model.Enemy;
 import main.domain.model.Player;
 import main.domain.model.PlayerBuilder;
 
-public class GameableBasicUseCase implements GameableUseCase {
-	
-	private final Drawable drawable;
-	private final ArmyFactory armyFactory;
+public class Game implements GameableUseCase {
+
 	private final EnemyMethod enemyMethod;
+	private final Drawable drawable;
 	
-	public GameableBasicUseCase(final ArmyFactory armyFactory, final Drawable drawable) {
+	public Game(final EnemyMethod enemyMethod, final Drawable drawable) {
+		this.enemyMethod = enemyMethod;
 		this.drawable = drawable;
-		this.armyFactory = armyFactory;
-		this.enemyMethod = new EnemyBasicMethod(this.armyFactory, this.drawable);
 	}
 
 	@Override

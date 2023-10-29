@@ -26,7 +26,7 @@ public class EnemyMiddleMethod implements EnemyMethod {
         final int attackLevelSoldier = 5;
         final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier, drawable);
         
-		final List<Enemy> enemies = new ArrayList<Enemy>();
+		final List<Enemy> enemies = new ArrayList<>();
 
 		// soldiers
         final int quantitySoldiers = 5;
@@ -38,9 +38,9 @@ public class EnemyMiddleMethod implements EnemyMethod {
         final int quantitySquadron = 2;
         final int quantitySoldiersForSquadron = 3;
         final int quantitySoldiersInSquadron = 3;
-		final List<Enemy> squadronsAndSoldiers = new ArrayList<Enemy>();
+		final List<Enemy> squadronsAndSoldiers = new ArrayList<>();
 		for (int createdSquadron = 1; createdSquadron <= quantitySquadron; createdSquadron++) {
-			final List<Enemy> soldiers = new ArrayList<Enemy>();
+			final List<Enemy> soldiers = new ArrayList<>();
 			for (int created = 1; created <= quantitySoldiersForSquadron; created++) {
 				soldiers.add(soldierEnemyBase.clone());
 			}
