@@ -4,32 +4,19 @@ import java.util.List;
 
 import main.application.driven.port.provider.Drawable;
 
-public class SquadronNaval implements Enemy {
+public class SquadronNaval extends Enemy {
 	
 	private final List<Enemy> squadron;
-	private final Drawable drawable;
 	
 	public SquadronNaval(final List<Enemy> squadron, final Drawable drawable) {
+		super(0, 0, drawable, new Bang(4));
 		this.squadron = squadron;
-		this.drawable = drawable;
-	}
-
-	@Override
-	public int getLife() {
-		int life = 0;
 		for (Enemy enemy : this.squadron) {
-			life += enemy.getLife();
+			this.life += enemy.getLife();
 		}
-		return life;
-	}
-
-	@Override
-	public int getAttackLevel() {
-		int attackLevel = 0;
 		for (Enemy enemy : this.squadron) {
-			attackLevel += enemy.getAttackLevel();
+			this.attackLevel += enemy.getAttackLevel();
 		}
-		return attackLevel;
 	}
 
 	@Override

@@ -2,17 +2,14 @@ package main.domain.model;
 
 import main.application.driven.port.provider.Drawable;
 
-public class SoldierNaval implements Soldier {
+public class SoldierNaval extends Soldier {
 	private final Clothe clothe;
-	private int life;
-	private int attackLevel;
-	private final Drawable drawable;
 
 	public SoldierNaval(final int life, final int attackLevel, final Drawable drawable) {
+		super(life, attackLevel, drawable);
 		this.clothe = ClotheFactory.getClothe("clothe soldier naval", "lentes google", "corto", "manga larga", "largos", "aletas");
 		this.life = life;
 		this.attackLevel = attackLevel;
-		this.drawable = drawable;
 	}
 
 	@Override
@@ -43,16 +40,6 @@ public class SoldierNaval implements Soldier {
 	@Override
 	public String getTypeShoes() {
 		return this.clothe.getTypeShoes();
-	}
-
-	@Override
-	public int getLife() {
-		return life;
-	}
-
-	@Override
-	public int getAttackLevel() {
-		return attackLevel;
 	}
 
 	@Override

@@ -3,17 +3,12 @@ package main.domain.model;
 import main.application.driven.port.provider.Drawable;
 import main.domain.exception.CreationSupremeEnemyException;
 
-public class SupremeAir implements Enemy {
-	private int life;
-	private int attackLevel;
-	private final Drawable drawable;
+public class SupremeAir extends Enemy {
 	
 	private static SupremeAir instance;
 	
 	private SupremeAir(final Drawable drawable) {
-		this.life = 200;
-		this.attackLevel = 15;
-		this.drawable = drawable;
+		super(200, 15, drawable, new InstantCure());
 	}
 	
 	public static SupremeAir getInstance(final Drawable drawable) {
@@ -24,16 +19,6 @@ public class SupremeAir implements Enemy {
 		}
 		
 		return instance;
-	}
-
-	@Override
-	public int getLife() {
-		return life;
-	}
-
-	@Override
-	public int getAttackLevel() {
-		return attackLevel;
 	}
 
 	@Override

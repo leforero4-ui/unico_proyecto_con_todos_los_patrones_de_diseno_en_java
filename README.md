@@ -23,10 +23,12 @@ creacional
 
 estructural
 
-* composite: crear infanteria con sus escuadrones y soldados
+* composite: crear infanteria con sus escuadrones y soldados que se mueven en la misma dirección
 
 * flyweight: compartir la ropa de los soldados (estado intrinseco/extrinseco)
 
 * facade: interface expuesta a las aplicaciones, en este caso la clase Controller.java
 
 * adapter: usar librerias externas como Lanterna para dibujar en consola
+
+* bridge: habilidad de cada enemigo
