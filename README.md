@@ -16,9 +16,9 @@ creacional
 
 * singleton: para crear el villano supremo que aparecera durante unos segundos en todos los niveles
 
-* prototype: para clonar los soldados cuando se está creando los villanos por niveles
+* prototype: para clonar los soldados cuando se están creando los villanos por niveles
 
-* abstract factory: para crear el juego por armada: terrestre, naval, o aérea
+* abstract factory: para crear el juego por armada: naval, o aérea
 
 
 estructural
