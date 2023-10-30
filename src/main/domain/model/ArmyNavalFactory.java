@@ -7,6 +7,11 @@ import main.application.driven.port.provider.Drawable;
 public class ArmyNavalFactory implements ArmyFactory {
 
 	@Override
+	public Player createPlayer(final PlayerBuilder playerBuilder) {
+		return new PlayerNaval(playerBuilder);
+	}
+
+	@Override
 	public Soldier createSoldier(final int life, final int attackLevel, final Drawable drawable) {
 		return new SoldierNaval(life, attackLevel, drawable);
 	}

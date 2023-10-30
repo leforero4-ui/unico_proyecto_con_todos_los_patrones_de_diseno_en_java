@@ -24,7 +24,7 @@ public abstract class Enemy {
 	}
 	
 	public void activeSkill() {
-		this.activeSkill();
+		this.skill.activeSkill();
 	}
 	
 	public abstract void draw();

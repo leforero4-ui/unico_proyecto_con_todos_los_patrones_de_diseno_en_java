@@ -32,3 +32,5 @@ estructural
 * adapter: usar librerias externas como Lanterna para dibujar en consola
 
 * bridge: habilidad de cada enemigo
+
+* decorator: para meter algunos enemigos del nivel alto en un fuerte brindandole una protección extra

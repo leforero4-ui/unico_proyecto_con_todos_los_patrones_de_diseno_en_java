@@ -83,8 +83,4 @@ public class PlayerBuilder {
 	public String typeShoes() {
 		return this.typeShoes;
 	}
-	
-	public Player build() {
-		return new Player(this);
-	}
 }
