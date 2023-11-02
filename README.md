@@ -34,3 +34,7 @@ estructural
 * bridge: habilidad de cada enemigo
 
 * decorator: para meter algunos enemigos del nivel alto en un fuerte brindandole una protección extra
+
+* proxy: ya que controller es un recurso pesado se le puede aplicar un proxy virtual para que se inicialice solo si se usa,
+y un proxy de caché para obtener las estadisticas por nivel ya que puede ser pesado su calculo,
+y un proxy de protección para no ver los logros si se ha iniciado en beta

@@ -75,7 +75,8 @@ public class ControllerImpl implements Controller {
 	}
 
 	@Override
-	public void getstatistics() {
+	public int getStatistics(final int level) {
+		return 0;
 	}
 
 }
