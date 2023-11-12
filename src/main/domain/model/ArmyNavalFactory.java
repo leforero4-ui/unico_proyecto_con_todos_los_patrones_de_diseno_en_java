@@ -2,8 +2,6 @@ package main.domain.model;
 
 import java.util.List;
 
-import main.application.driven.port.provider.Drawable;
-
 public class ArmyNavalFactory implements ArmyFactory {
 
 	@Override
@@ -12,18 +10,18 @@ public class ArmyNavalFactory implements ArmyFactory {
 	}
 
 	@Override
-	public Soldier createSoldier(final int life, final int attackLevel, final Drawable drawable) {
-		return new SoldierNaval(life, attackLevel, drawable);
+	public Soldier createSoldier(final int life, final int attackLevel) {
+		return new SoldierNaval(life, attackLevel);
 	}
 
 	@Override
-	public Enemy createSquadron(final List<Enemy> squadron, final Drawable drawable) {
-		return new SquadronNaval(squadron, drawable);
+	public Enemy createSquadron(final List<Enemy> squadron) {
+		return new SquadronNaval(squadron);
 	}
 
 	@Override
-	public Enemy getSupreme(final Drawable drawable) {
-		return SupremeNaval.getInstance(drawable);
+	public Enemy getSupreme() {
+		return SupremeNaval.getInstance();
 	}
 
 }

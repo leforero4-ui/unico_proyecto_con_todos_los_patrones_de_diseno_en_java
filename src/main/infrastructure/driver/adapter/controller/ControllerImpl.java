@@ -37,15 +37,15 @@ public class ControllerImpl implements Controller {
 		final EnemyMethod enemyMethod = switch (this.drawable.in("nivel básico: 1\r\nnivel medio: 2\r\nnivel alto oprima: cualquier tecla")) {
 			case "1" -> {
 				this.drawable.out("básico:");
-				yield new EnemyBasicMethod(armyFactory, drawable);
+				yield new EnemyBasicMethod(armyFactory);
 			}
 			case "2" -> {
 				this.drawable.out("medio:");
-				yield new EnemyMiddleMethod(armyFactory, this.drawable);
+				yield new EnemyMiddleMethod(armyFactory);
 			}
 			default -> {
 				this.drawable.out("alto:");
-				yield new EnemyHighMethod(armyFactory, this.drawable);
+				yield new EnemyHighMethod(armyFactory);
 			}
 		};
 
@@ -54,7 +54,7 @@ public class ControllerImpl implements Controller {
 	
 	private Player createPlayer() {
 		this.drawable.out("crear jugador");
-		final PlayerBuilder playerBuilder = new PlayerBuilder(this.drawable);
+		final PlayerBuilder playerBuilder = new PlayerBuilder();
 		playerBuilder.name(this.drawable.in("nombre:"));
 		playerBuilder.typeEye(this.drawable.in("tipo de ojos:"));
 		playerBuilder.typeHair(this.drawable.in("tipo de pelo:"));
@@ -67,7 +67,7 @@ public class ControllerImpl implements Controller {
 	
 	@Override
 	public void startGame() {
-		this.gameableUseCase.startGame();
+		this.drawable.out(this.gameableUseCase.startGame());
 	}
 
 	@Override

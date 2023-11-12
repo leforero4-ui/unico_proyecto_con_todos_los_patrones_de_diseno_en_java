@@ -7,8 +7,7 @@ public class PlayerNaval extends Player {
 	}
 
 	@Override
-	public void draw() {
-		this.drawable.out("PlayerNaval [name=" + name + ", type=" + type.getName() + ", typeEye=" + typeEye + ", typeHair=" + typeHair
-				+ ", typeShirt=" + typeShirt + ", typePant=" + typePant + ", typeShoes=" + typeShoes + "]");
+	public String getAvatar() {
+		return "AN";
 	}
 }

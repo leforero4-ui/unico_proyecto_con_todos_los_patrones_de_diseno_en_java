@@ -7,8 +7,7 @@ public class PlayerAir extends Player {
 	}
 
 	@Override
-	public void draw() {
-		this.drawable.out("PlayerAir [name=" + name + ", type=" + type.getName() + ", typeEye=" + typeEye + ", typeHair=" + typeHair
-				+ ", typeShirt=" + typeShirt + ", typePant=" + typePant + ", typeShoes=" + typeShoes + "]");
+	public String getAvatar() {
+		return "AA";
 	}
 }

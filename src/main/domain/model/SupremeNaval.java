@@ -1,29 +1,24 @@
 package main.domain.model;
 
-import main.application.driven.port.provider.Drawable;
-import main.domain.exception.CreationSupremeEnemyException;
-
 public class SupremeNaval extends Enemy {
 	
 	private static SupremeNaval instance;
 	
-	private SupremeNaval(final Drawable drawable) {
-		super(200, 15, drawable, new InstantCure());
+	private SupremeNaval() {
+		super(200, 15, new InstantCure());
 	}
 	
-	public static SupremeNaval getInstance(final Drawable drawable) {
+	public static SupremeNaval getInstance() {
 		if(instance == null) {
-			instance = new SupremeNaval(drawable);
-		} else if (instance.drawable != drawable) {
-			throw new CreationSupremeEnemyException();
+			instance = new SupremeNaval();
 		}
 		
 		return instance;
 	}
 
 	@Override
-	public void draw() {
-		this.drawable.out("SupremeNaval [life=" + life + ", attackLevel=" + attackLevel + "]");
+	public String getAvatar(final String prefix) {
+		return prefix + "MN|";
 	}
 
 	@Override

@@ -1,12 +1,10 @@
 package main.domain.model;
 
-import main.application.driven.port.provider.Drawable;
-
 public class SoldierNaval extends Soldier {
 	private final Clothe clothe;
 
-	public SoldierNaval(final int life, final int attackLevel, final Drawable drawable) {
-		super(life, attackLevel, drawable);
+	public SoldierNaval(final int life, final int attackLevel) {
+		super(life, attackLevel);
 		this.clothe = ClotheFactory.getClothe("clothe soldier naval", "lentes google", "corto", "manga larga", "largos", "aletas");
 		this.life = life;
 		this.attackLevel = attackLevel;
@@ -14,7 +12,7 @@ public class SoldierNaval extends Soldier {
 
 	@Override
 	public SoldierNaval clone() {
-		return new SoldierNaval(this.life, this.attackLevel, this.drawable);
+		return new SoldierNaval(this.life, this.attackLevel);
 	}
 
 	@Override
@@ -43,8 +41,8 @@ public class SoldierNaval extends Soldier {
 	}
 
 	@Override
-	public void draw() {
-		this.drawable.out("SoldierNaval [life=" + life + ", attackLevel=" + attackLevel + "]");
+	public String getAvatar(final String prefix) {
+		return prefix + "SN|";
 	}
 
 	@Override

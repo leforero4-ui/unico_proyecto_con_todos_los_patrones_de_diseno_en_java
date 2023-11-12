@@ -1,17 +1,13 @@
 package main.domain.model;
 
-import main.application.driven.port.provider.Drawable;
-
 public abstract class Enemy {
 	protected int life;
 	protected int attackLevel;
-	protected final Drawable drawable;
 	protected final Skillfull skill;
 	
-	public Enemy(int life, int attackLevel, Drawable drawable, Skillfull skill) {
+	public Enemy(int life, int attackLevel, Skillfull skill) {
 		this.life = life;
 		this.attackLevel = attackLevel;
-		this.drawable = drawable;
 		this.skill = skill;
 	}
 
@@ -27,6 +23,6 @@ public abstract class Enemy {
 		this.skill.activeSkill();
 	}
 	
-	public abstract void draw();
+	public abstract String getAvatar(final String prefix);
 	public abstract void move(int direction);
 }

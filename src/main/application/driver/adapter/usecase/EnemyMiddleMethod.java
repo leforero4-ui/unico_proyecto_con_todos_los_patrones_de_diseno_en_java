@@ -3,19 +3,15 @@ package main.application.driver.adapter.usecase;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.application.driven.port.provider.Drawable;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.domain.model.ArmyFactory;
 import main.domain.model.Enemy;
 import main.domain.model.Soldier;
 
 public class EnemyMiddleMethod implements EnemyMethod {
-	
-	private final Drawable drawable;
 	private final ArmyFactory armyFactory;
 
-	public EnemyMiddleMethod(final ArmyFactory armyFactory, Drawable drawable) {
-		this.drawable = drawable;
+	public EnemyMiddleMethod(final ArmyFactory armyFactory) {
 		this.armyFactory = armyFactory;
 	}
 
@@ -24,7 +20,7 @@ public class EnemyMiddleMethod implements EnemyMethod {
 	public List<Enemy> createEnemies() {
         final int lifeSoldier = 25;
         final int attackLevelSoldier = 5;
-        final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier, drawable);
+        final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier);
         
 		final List<Enemy> enemies = new ArrayList<>();
 
@@ -37,24 +33,24 @@ public class EnemyMiddleMethod implements EnemyMethod {
 		// infantry
         final int quantitySquadron = 2;
         final int quantitySoldiersForSquadron = 3;
-        final int quantitySoldiersInSquadron = 3;
 		final List<Enemy> squadronsAndSoldiers = new ArrayList<>();
 		for (int createdSquadron = 1; createdSquadron <= quantitySquadron; createdSquadron++) {
 			final List<Enemy> soldiers = new ArrayList<>();
 			for (int created = 1; created <= quantitySoldiersForSquadron; created++) {
 				soldiers.add(soldierEnemyBase.clone());
 			}
-			final Enemy squadron = armyFactory.createSquadron(soldiers, drawable);
+			final Enemy squadron = armyFactory.createSquadron(soldiers);
 			squadronsAndSoldiers.add(squadron);
 		}
+        final int quantitySoldiersInSquadron = 3;
 		for (int created = 1; created <= quantitySoldiersInSquadron; created++) {
 			squadronsAndSoldiers.add(soldierEnemyBase.clone());
 		}
-		final Enemy infantry = armyFactory.createSquadron(squadronsAndSoldiers, drawable);
+		final Enemy infantry = armyFactory.createSquadron(squadronsAndSoldiers);
 		enemies.add(infantry);
 		
 		// supreme
-		enemies.add(armyFactory.getSupreme(drawable));
+		enemies.add(armyFactory.getSupreme());
 		
 		return enemies;
 	}

@@ -4,14 +4,13 @@ public class Fort extends Enemy {
 	private Enemy enemy;
 
 	public Fort(final Enemy enemy) {
-		super(enemy.life, enemy.attackLevel, enemy.drawable, enemy.skill);
+		super(enemy.life, enemy.attackLevel, enemy.skill);
 		this.enemy = enemy;
 	}
 
 	@Override
-	public void draw() {
-		this.drawable.out("enemigo con un fuerte:");
-		enemy.draw();
+	public String getAvatar(final String prefix) {
+		return enemy.getAvatar(prefix + "F");
 	}
 
 	@Override

@@ -1,10 +1,8 @@
 package main.domain.model;
 
-import main.application.driven.port.provider.Drawable;
 import main.domain.model.valueobject.Type;
 
 public class PlayerBuilder {
-	private Drawable drawable;
 	private String name;
 	private Type type;
 	private String typeEye;
@@ -12,14 +10,6 @@ public class PlayerBuilder {
 	private String typeShirt;
 	private String typePant;
 	private String typeShoes;
-
-	public PlayerBuilder (final Drawable drawable) {
-		this.drawable = drawable;
-	}
-
-	public Drawable drawable() {
-		return this.drawable;
-	}
 
 	public PlayerBuilder name(final String name) {
 		this.name = name;

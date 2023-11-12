@@ -1,29 +1,24 @@
 package main.domain.model;
 
-import main.application.driven.port.provider.Drawable;
-import main.domain.exception.CreationSupremeEnemyException;
-
 public class SupremeAir extends Enemy {
 	
 	private static SupremeAir instance;
 	
-	private SupremeAir(final Drawable drawable) {
-		super(200, 15, drawable, new InstantCure());
+	private SupremeAir() {
+		super(200, 15, new InstantCure());
 	}
 	
-	public static SupremeAir getInstance(final Drawable drawable) {
+	public static SupremeAir getInstance() {
 		if(instance == null) {
-			instance = new SupremeAir(drawable);
-		} else if (instance.drawable != drawable) {
-			throw new CreationSupremeEnemyException();
+			instance = new SupremeAir();
 		}
 		
 		return instance;
 	}
 
 	@Override
-	public void draw() {
-		this.drawable.out("SupremeAir [life=" + life + ", attackLevel=" + attackLevel + "]");
+	public String getAvatar(final String prefix) {
+		return prefix + "MA|";
 	}
 
 	@Override

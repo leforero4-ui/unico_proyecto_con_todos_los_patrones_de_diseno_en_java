@@ -14,23 +14,31 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 public class LanternaDrawable implements Drawable {
+	private Screen screen;
+	private WindowBasedTextGUI textGUI;
+
+	public LanternaDrawable() {
+		try {
+			final DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
+			final Terminal terminal = terminalFactory.createTerminal();
+			this.screen = new TerminalScreen(terminal);
+			this.textGUI = new MultiWindowTextGUI(screen);
+		} catch (IOException e) {
+            System.out.println(e.getMessage());
+		}
+	}
 
 	@Override
 	public String in(String text) {
 		try {
-            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-            Terminal terminal = terminalFactory.createTerminal();
-            Screen screen = new TerminalScreen(terminal);
-        	screen.startScreen();
-        	
-        	final WindowBasedTextGUI textGUI = new MultiWindowTextGUI(screen);
+        	this.screen.startScreen();
         	
         	return new TextInputDialogBuilder()
     		.setTitle("Juego:")
     		.setDescription(text)
     		//.setValidationPattern(Pattern.compile("[0-9]"), "You didn't enter a single number!")
     		.build()
-    		.showDialog(textGUI);
+    		.showDialog(this.textGUI);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -40,19 +48,13 @@ public class LanternaDrawable implements Drawable {
 	@Override
 	public void out(String text) {
 		try {
-			// Setup terminal and screen layers
-			Terminal terminal = new DefaultTerminalFactory().createTerminal();
-			Screen screen = new TerminalScreen(terminal);
-			screen.startScreen();
-
-			// Setup WindowBasedTextGUI for dialogs
-			final WindowBasedTextGUI textGUI = new MultiWindowTextGUI(screen);
+			this.screen.startScreen();
 			
 			new MessageDialogBuilder()
 			.setTitle("Juego:")
 			.setText(text)
 			.build()
-			.showDialog(textGUI);
+			.showDialog(this.textGUI);
 		} catch (IOException e) {
             System.out.println(e.getMessage());
 		}
