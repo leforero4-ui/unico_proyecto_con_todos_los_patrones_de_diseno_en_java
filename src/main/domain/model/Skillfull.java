@@ -1,5 +1,5 @@
 package main.domain.model;
 
 public interface Skillfull {
-	void activeSkill();
+	int getEnhancedAttackLevel(int attackLevel);
 }

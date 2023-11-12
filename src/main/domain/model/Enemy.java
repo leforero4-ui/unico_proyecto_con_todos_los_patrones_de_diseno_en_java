@@ -14,15 +14,11 @@ public abstract class Enemy {
 	public int getLife() {
 		return this.life;
 	}
-
-	public int getAttackLevel() {
-		return this.attackLevel;
-	}
 	
-	public void activeSkill() {
-		this.skill.activeSkill();
+	public int getAttackLevel() {
+		return this.skill.getEnhancedAttackLevel(this.attackLevel);
 	}
 	
 	public abstract String getAvatar(final String prefix);
-	public abstract void move(int direction);
+	public abstract void move(int direction); //TODO: eliminar movimiento cuando se implemente el ataque, de ese modo los escuadrones en lugar de moversen al mismo tiempo atacaran al mismo tiempo
 }

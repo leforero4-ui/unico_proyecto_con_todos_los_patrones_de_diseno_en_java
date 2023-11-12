@@ -8,10 +8,12 @@ public class Bang implements Skillfull {
 	}
 
 	@Override
-	public void activeSkill() {
+	public int getEnhancedAttackLevel(int attackLevel) {
 		if (this.remainingUsage > 0) {
 			--this.remainingUsage;
+			attackLevel *= 2;
 		}
+		return attackLevel;
 	}
 
 }

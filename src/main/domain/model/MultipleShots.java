@@ -8,7 +8,8 @@ public class MultipleShots implements Skillfull {
 	}
 
 	@Override
-	public void activeSkill() {
+	public int getEnhancedAttackLevel(int attackLevel) {
+		return attackLevel + numberOfSimultaneousShots;
 	}
 
 }

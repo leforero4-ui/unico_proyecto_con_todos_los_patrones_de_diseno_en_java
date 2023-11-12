@@ -5,7 +5,7 @@ public class SupremeNaval extends Enemy {
 	private static SupremeNaval instance;
 	
 	private SupremeNaval() {
-		super(200, 15, new InstantCure());
+		super(200, 15, new Poison());
 	}
 	
 	public static SupremeNaval getInstance() {

@@ -5,7 +5,7 @@ public class SupremeAir extends Enemy {
 	private static SupremeAir instance;
 	
 	private SupremeAir() {
-		super(200, 15, new InstantCure());
+		super(200, 15, new Poison());
 	}
 	
 	public static SupremeAir getInstance() {

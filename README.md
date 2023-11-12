@@ -31,7 +31,7 @@ estructural
 
 * adapter: usar librerias externas como Lanterna para dibujar en consola
 
-* bridge: habilidad de cada enemigo
+* bridge: habilidad de cada enemigo que usa para atacar
 
 * decorator: para meter algunos enemigos del nivel alto en un fuerte brindandole una protección extra
 
@@ -42,3 +42,5 @@ y un proxy de protección para no ver los logros si se ha iniciado en beta
 comportamiento
 
 * iterator: para recorrer el tablero del juego para mostrar los enemigos
+
+* strategy: estrategía para calcular el ataque de cada enemigo
