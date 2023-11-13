@@ -31,7 +31,7 @@ public class EnemyHighMethod implements EnemyMethod {
 			enemies.add(soldierEnemyBase.clone());
 		}
 
-		// soldiers with fork
+		// soldiers with fort
         final int quantitySoldiersWithFork = 2;
 		for (int created = 1; created <= quantitySoldiersWithFork; created++) {
 			enemies.add(new Fort(soldierEnemyBase.clone()));
@@ -46,7 +46,10 @@ public class EnemyHighMethod implements EnemyMethod {
 			for (int created = 1; created <= quantitySoldiersForSquadron; created++) {
 				soldiers.add(soldierEnemyBase.clone());
 			}
-			final Enemy squadron = armyFactory.createSquadron(soldiers);
+			Enemy squadron = armyFactory.createSquadron(soldiers);
+			if (createdSquadron == 1) {
+				squadron = new Fort(squadron);
+			}
 			squadronsAndSoldiers.add(squadron);
 		}
         final int quantitySoldiersInSquadron = 4;

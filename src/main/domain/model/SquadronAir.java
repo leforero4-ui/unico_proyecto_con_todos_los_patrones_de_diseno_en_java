@@ -9,11 +9,30 @@ public class SquadronAir extends Enemy {
 	public SquadronAir(final List<Enemy> squadron) {
 		super(0, 0, new Bang(4));
 		this.squadron = squadron;
+	}
+
+	@Override
+	public int getLife() {
+		this.life = 0;
 		for (Enemy enemy : this.squadron) {
 			this.life += enemy.getLife();
 		}
+		return this.life;
+	}
+
+	@Override
+	public int getAttackLevel() {
+		this.attackLevel = 0;
 		for (Enemy enemy : this.squadron) {
 			this.attackLevel += enemy.getAttackLevel();
+		}
+		return this.attackLevel;
+	}
+
+	@Override
+	public void receiveAttack(int attack) {
+		if (this.squadron.size() > 0) {
+			this.squadron.get(0).receiveAttack(attack);
 		}
 	}
 
@@ -24,11 +43,6 @@ public class SquadronAir extends Enemy {
 			avatarTemp.append(enemy.getAvatar(prefix + "EA"));
 		}
 		return avatarTemp.toString();
-	}
-
-	@Override
-	public void move(int direction) {
-		// TODO Auto-generated method stub
 	}
 
 }

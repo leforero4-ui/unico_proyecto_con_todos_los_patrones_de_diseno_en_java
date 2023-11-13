@@ -5,6 +5,11 @@ public abstract class Soldier extends Enemy {
 		super(life, attackLevel, new MultipleShots(2));
 	}
 	
+	@Override
+	public void receiveAttack(int attack) {
+		this.life -= attack;
+	}
+
 	public abstract Soldier clone();
 	public abstract String getTypeEye();
 	public abstract String getTypeHair();

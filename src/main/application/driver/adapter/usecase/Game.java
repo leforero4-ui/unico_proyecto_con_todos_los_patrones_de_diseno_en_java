@@ -29,7 +29,7 @@ public class Game implements GameableUseCase {
             squares.append(enemyIterator.getAvatarNext());
         }
 		enemyIterator.reset();
-        return "board: " + squares.toString() + "\n" + this.player.getAvatar();
+        return "tablero: " + squares.toString() + "\n" + this.player.getAvatar();
 	}
 
 }

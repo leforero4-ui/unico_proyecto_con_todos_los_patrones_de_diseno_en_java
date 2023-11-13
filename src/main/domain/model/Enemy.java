@@ -19,6 +19,6 @@ public abstract class Enemy {
 		return this.skill.getEnhancedAttackLevel(this.attackLevel);
 	}
 	
+	public abstract void receiveAttack(final int attack);	
 	public abstract String getAvatar(final String prefix);
-	public abstract void move(int direction); //TODO: eliminar movimiento cuando se implemente el ataque, de ese modo los escuadrones en lugar de moversen al mismo tiempo atacaran al mismo tiempo
 }

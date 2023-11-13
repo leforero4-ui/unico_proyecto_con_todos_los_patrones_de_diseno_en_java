@@ -44,11 +44,5 @@ public class SoldierAir extends Soldier {
 	public String getAvatar(final String prefix) {
 		return prefix + "SA|";
 	}
-
-	@Override
-	public void move(final int direction) {
-		// TODO Auto-generated method stub
-	}
-	
 	
 }

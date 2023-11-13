@@ -23,7 +23,7 @@ creacional
 
 estructural
 
-* composite: crear infanteria con sus escuadrones y soldados que se mueven en la misma dirección
+* composite: crear infanteria con sus escuadrones y soldados que ataquen al mismo tiempo
 
 * flyweight: compartir la ropa de los soldados (estado intrinseco/extrinseco)
 
@@ -33,7 +33,7 @@ estructural
 
 * bridge: habilidad de cada enemigo que usa para atacar
 
-* decorator: para meter algunos enemigos del nivel alto en un fuerte brindandole una protección extra
+* decorator: para meter algunos enemigos en un fuerte brindandole una protección extra
 
 * proxy: ya que controller es un recurso pesado se le puede aplicar un proxy virtual para que se inicialice solo si se usa,
 y un proxy de caché para obtener las estadisticas por nivel ya que puede ser pesado su calculo,
@@ -41,6 +41,6 @@ y un proxy de protección para no ver los logros si se ha iniciado en beta
 
 comportamiento
 
-* iterator: para recorrer el tablero del juego para mostrar los enemigos
+* iterator: recorrer el tablero del juego para mostrar los enemigos
 
 * strategy: estrategía para calcular el ataque de cada enemigo

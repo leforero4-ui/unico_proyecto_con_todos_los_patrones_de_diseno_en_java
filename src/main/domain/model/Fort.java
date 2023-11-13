@@ -1,20 +1,19 @@
 package main.domain.model;
 
-public class Fort extends Enemy {
-	private Enemy enemy;
+public class Fort extends DecoratorEnemy {
 
 	public Fort(final Enemy enemy) {
-		super(enemy.life, enemy.attackLevel, enemy.skill);
-		this.enemy = enemy;
+		super(enemy);
 	}
 
 	@Override
-	public String getAvatar(final String prefix) {
-		return enemy.getAvatar(prefix + "F");
+	public void receiveAttack(int attack) {
+		super.receiveAttack(attack - 2);
 	}
 
 	@Override
-	public void move(int direction) {
+	public String getAvatar(String prefix) {
+		return super.getAvatar(prefix + "F");
 	}
 
 }

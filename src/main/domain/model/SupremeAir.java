@@ -17,13 +17,13 @@ public class SupremeAir extends Enemy {
 	}
 
 	@Override
-	public String getAvatar(final String prefix) {
-		return prefix + "MA|";
+	public void receiveAttack(int attack) {
+		this.life -= attack - 4;
 	}
 
 	@Override
-	public void move(int direction) {
-		// TODO Auto-generated method stub
+	public String getAvatar(final String prefix) {
+		return prefix + "MA|";
 	}
 
 }

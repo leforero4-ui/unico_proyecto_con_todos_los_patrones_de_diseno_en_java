@@ -44,11 +44,5 @@ public class SoldierNaval extends Soldier {
 	public String getAvatar(final String prefix) {
 		return prefix + "SN|";
 	}
-
-	@Override
-	public void move(final int direction) {
-		// TODO Auto-generated method stub
-	}
-	
 	
 }
