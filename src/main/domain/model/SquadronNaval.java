@@ -6,8 +6,8 @@ public class SquadronNaval extends Enemy {
 	
 	private final List<Enemy> squadron;
 	
-	public SquadronNaval(final List<Enemy> squadron) {
-		super(0, 0, new Bang(5));
+	public SquadronNaval(final List<Enemy> squadron, final Skillfull skill) {
+		super(0, 0, skill);
 		this.squadron = squadron;
 	}
 
@@ -17,7 +17,7 @@ public class SquadronNaval extends Enemy {
 		for (Enemy enemy : this.squadron) {
 			this.life += enemy.getLife();
 		}
-		return this.life;
+		return super.getLife();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class SquadronNaval extends Enemy {
 		for (Enemy enemy : this.squadron) {
 			this.attackLevel += enemy.getAttackLevel();
 		}
-		return this.attackLevel;
+		return super.getAttackLevel();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class SquadronNaval extends Enemy {
 	public String getAvatar(final String prefix) {
 		StringBuilder avatarTemp = new StringBuilder();
 		for (Enemy enemy : this.squadron) {
-			avatarTemp.append(enemy.getAvatar(prefix + "EN"));
+			avatarTemp.append(enemy.getAvatar(prefix + this.skill.getIdentifier() + "EN"));
 		}
 		return avatarTemp.toString();
 	}

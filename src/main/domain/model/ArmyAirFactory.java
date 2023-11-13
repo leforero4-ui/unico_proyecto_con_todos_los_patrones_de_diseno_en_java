@@ -10,13 +10,13 @@ public class ArmyAirFactory implements ArmyFactory {
 	}
 
 	@Override
-	public Soldier createSoldier(final int life, final int attackLevel) {
-		return new SoldierAir(life, attackLevel);
+	public Soldier createSoldier(final int life, final int attackLevel, final Skillfull skill) {
+		return new SoldierAir(life, attackLevel, skill);
 	}
 
 	@Override
-	public Enemy createSquadron(final List<Enemy> squadron) {
-		return new SquadronAir(squadron);
+	public Enemy createSquadron(final List<Enemy> squadron, final Skillfull skill) {
+		return new SquadronAir(squadron, skill);
 	}
 
 	@Override

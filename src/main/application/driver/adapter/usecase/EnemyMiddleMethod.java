@@ -5,7 +5,10 @@ import java.util.List;
 
 import main.application.driver.port.usecase.EnemyMethod;
 import main.domain.model.ArmyFactory;
+import main.domain.model.Bang;
 import main.domain.model.Enemy;
+import main.domain.model.MultipleShots;
+import main.domain.model.Poison;
 import main.domain.model.Soldier;
 
 public class EnemyMiddleMethod implements EnemyMethod {
@@ -20,7 +23,7 @@ public class EnemyMiddleMethod implements EnemyMethod {
 	public List<Enemy> createEnemies() {
         final int lifeSoldier = 25;
         final int attackLevelSoldier = 5;
-        final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier);
+        final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier, new Bang(2));
         
 		final List<Enemy> enemies = new ArrayList<>();
 
@@ -39,14 +42,14 @@ public class EnemyMiddleMethod implements EnemyMethod {
 			for (int created = 1; created <= quantitySoldiersForSquadron; created++) {
 				soldiers.add(soldierEnemyBase.clone());
 			}
-			final Enemy squadron = armyFactory.createSquadron(soldiers);
+			final Enemy squadron = armyFactory.createSquadron(soldiers, new Poison());
 			squadronsAndSoldiers.add(squadron);
 		}
         final int quantitySoldiersInSquadron = 3;
 		for (int created = 1; created <= quantitySoldiersInSquadron; created++) {
 			squadronsAndSoldiers.add(soldierEnemyBase.clone());
 		}
-		final Enemy infantry = armyFactory.createSquadron(squadronsAndSoldiers);
+		final Enemy infantry = armyFactory.createSquadron(squadronsAndSoldiers, new MultipleShots(2));
 		enemies.add(infantry);
 		
 		// supreme

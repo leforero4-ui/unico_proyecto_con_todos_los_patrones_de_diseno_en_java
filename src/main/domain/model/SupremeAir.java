@@ -5,7 +5,7 @@ public class SupremeAir extends Enemy {
 	private static SupremeAir instance;
 	
 	private SupremeAir() {
-		super(200, 15, new Poison());
+		super(200, 15, new MultipleShots(3));
 	}
 	
 	public static SupremeAir getInstance() {
@@ -23,7 +23,7 @@ public class SupremeAir extends Enemy {
 
 	@Override
 	public String getAvatar(final String prefix) {
-		return prefix + "MA|";
+		return prefix + this.skill.getIdentifier() + "MA|";
 	}
 
 }

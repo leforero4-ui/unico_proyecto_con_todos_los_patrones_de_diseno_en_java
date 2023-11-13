@@ -5,7 +5,7 @@ public class SupremeNaval extends Enemy {
 	private static SupremeNaval instance;
 	
 	private SupremeNaval() {
-		super(200, 15, new Poison());
+		super(200, 15, new Bang(10));
 	}
 	
 	public static SupremeNaval getInstance() {
@@ -23,7 +23,7 @@ public class SupremeNaval extends Enemy {
 
 	@Override
 	public String getAvatar(final String prefix) {
-		return prefix + "MN|";
+		return prefix + this.skill.getIdentifier() + "MN|";
 	}
 
 }

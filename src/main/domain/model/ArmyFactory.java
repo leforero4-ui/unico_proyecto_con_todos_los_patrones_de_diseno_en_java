@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ArmyFactory {
 	Player createPlayer(PlayerBuilder playerBuilder);
-	Soldier createSoldier(int life, int attackLevel);
-	Enemy createSquadron(List<Enemy> squadron);
+	Soldier createSoldier(int life, int attackLevel, Skillfull skill);
+	Enemy createSquadron(List<Enemy> squadron, Skillfull skill);
 	Enemy getSupreme();
 }

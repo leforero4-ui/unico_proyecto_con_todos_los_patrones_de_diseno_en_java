@@ -12,4 +12,14 @@ public class MultipleShots implements Skillfull {
 		return attackLevel + numberOfSimultaneousShots;
 	}
 
+	@Override
+	public Skillfull getClone() {
+		return new MultipleShots(this.numberOfSimultaneousShots);
+	}
+
+	@Override
+	public String getIdentifier() {
+		return "M";
+	}
+
 }

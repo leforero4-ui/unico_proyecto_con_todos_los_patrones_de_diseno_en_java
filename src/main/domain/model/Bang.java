@@ -16,4 +16,14 @@ public class Bang implements Skillfull {
 		return attackLevel;
 	}
 
+	@Override
+	public Skillfull getClone() {
+		return new Bang(this.remainingUsage);
+	}
+
+	@Override
+	public String getIdentifier() {
+		return "B";
+	}
+
 }

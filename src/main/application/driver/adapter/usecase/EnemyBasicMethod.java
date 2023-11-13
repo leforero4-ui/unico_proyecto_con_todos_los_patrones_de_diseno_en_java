@@ -6,6 +6,7 @@ import java.util.List;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.domain.model.ArmyFactory;
 import main.domain.model.Enemy;
+import main.domain.model.Poison;
 import main.domain.model.Soldier;
 
 public class EnemyBasicMethod implements EnemyMethod {
@@ -20,7 +21,7 @@ public class EnemyBasicMethod implements EnemyMethod {
 	public List<Enemy> createEnemies() {
         final int lifeSoldier = 25;
         final int attackLevelSoldier = 5;
-        final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier);
+        final Soldier soldierEnemyBase = armyFactory.createSoldier(lifeSoldier, attackLevelSoldier, new Poison());
         
 		final List<Enemy> enemies = new ArrayList<Enemy>();
 

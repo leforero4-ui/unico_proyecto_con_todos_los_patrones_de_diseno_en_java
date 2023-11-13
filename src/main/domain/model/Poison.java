@@ -12,4 +12,14 @@ public class Poison implements Skillfull {
 		return attackLevel;
 	}
 
+	@Override
+	public Skillfull getClone() {
+		return new Poison();
+	}
+
+	@Override
+	public String getIdentifier() {
+		return "P";
+	}
+
 }

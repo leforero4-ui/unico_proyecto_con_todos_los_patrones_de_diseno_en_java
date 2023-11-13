@@ -3,16 +3,14 @@ package main.domain.model;
 public class SoldierAir extends Soldier {
 	private final Clothe clothe;
 
-	public SoldierAir(final int life, final int attackLevel) {
-		super(life, attackLevel);
+	public SoldierAir(final int life, final int attackLevel, final Skillfull skill) {
+		super(life, attackLevel, skill);
 		this.clothe = ClotheFactory.getClothe("clothe soldier air", "lentes oscuros", "corto", "manga larga", "largos", "botas");
-		this.life = life;
-		this.attackLevel = attackLevel;
 	}
 
 	@Override
 	public SoldierAir clone() {
-		return new SoldierAir(this.life, this.attackLevel);
+		return new SoldierAir(this.life, this.attackLevel, this.skill.getClone());
 	}
 
 	@Override
@@ -42,7 +40,7 @@ public class SoldierAir extends Soldier {
 
 	@Override
 	public String getAvatar(final String prefix) {
-		return prefix + "SA|";
+		return prefix + this.skill.getIdentifier() + "SA|";
 	}
 	
 }

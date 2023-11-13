@@ -1,8 +1,8 @@
 package main.domain.model;
 
 public abstract class Soldier extends Enemy {
-	public Soldier(int life, int attackLevel) {
-		super(life, attackLevel, new MultipleShots(2));
+	public Soldier(int life, int attackLevel, final Skillfull skill) {
+		super(life, attackLevel, skill);
 	}
 	
 	@Override

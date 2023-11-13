@@ -10,13 +10,13 @@ public class ArmyNavalFactory implements ArmyFactory {
 	}
 
 	@Override
-	public Soldier createSoldier(final int life, final int attackLevel) {
-		return new SoldierNaval(life, attackLevel);
+	public Soldier createSoldier(final int life, final int attackLevel, final Skillfull skill) {
+		return new SoldierNaval(life, attackLevel, skill);
 	}
 
 	@Override
-	public Enemy createSquadron(final List<Enemy> squadron) {
-		return new SquadronNaval(squadron);
+	public Enemy createSquadron(final List<Enemy> squadron, final Skillfull skill) {
+		return new SquadronNaval(squadron, skill);
 	}
 
 	@Override
