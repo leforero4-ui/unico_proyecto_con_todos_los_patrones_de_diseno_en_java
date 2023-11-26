@@ -41,8 +41,8 @@ y un proxy de protección para no ver los logros si se ha iniciado en beta
 
 comportamiento
 
-* iterator: recorrer el tablero del juego para mostrar los enemigos
+* iterator: recorrer el tablero del juego para dibujar los enemigos
 
-* strategy: estrategía para calcular el ataque de cada enemigo
+* strategy: estrategía(habilidad) para calcular el nivel de ataque de cada enemigo
 
-* mediator: interface que controla los ataques entre el jugador y los enemigos, en este caso GameableUseCase.java
+* mediator: interface que controla los ataques y los contraataques entre el jugador y los enemigos, en este caso GameableUseCase.java
