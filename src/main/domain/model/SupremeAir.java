@@ -17,7 +17,7 @@ public class SupremeAir extends Enemy {
 	}
 
 	@Override
-	public void receiveAttack(int attack) {
+	public void calculateDamage(int attack) {
 		this.life -= attack - 4;
 	}
 

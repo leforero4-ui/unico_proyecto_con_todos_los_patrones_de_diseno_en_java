@@ -27,7 +27,7 @@ estructural
 
 * flyweight: compartir la ropa de los soldados (estado intrinseco/extrinseco)
 
-* facade: interface expuesta a las aplicaciones, en este caso la clase Controller.java
+* facade: interface expuesta a las aplicaciones ocultando las complejidades del juego, logros, y estadisticas, en este caso la clase Controller.java
 
 * adapter: usar librerias externas como Lanterna para dibujar en consola
 
@@ -44,3 +44,5 @@ comportamiento
 * iterator: recorrer el tablero del juego para mostrar los enemigos
 
 * strategy: estrategía para calcular el ataque de cada enemigo
+
+* mediator: interface que controla los ataques entre el jugador y los enemigos, en este caso GameableUseCase.java

@@ -2,19 +2,20 @@ package main.application.driver.adapter.usecase.board;
 
 import java.util.List;
 
-import main.application.driver.port.usecase.iterator.Collection;
-import main.application.driver.port.usecase.iterator.Iterator;
+import main.application.driver.port.usecase.iterator.BoardCollection;
+import main.application.driver.port.usecase.iterator.PatternsIterator;
 import main.domain.model.Enemy;
 
-public class BigBoard implements Collection<Enemy> {
+public class BigBoard implements BoardCollection<Enemy> {
     private final Enemy[][] squares;
+    private final PatternsIterator<Enemy> iterator;
     private static final int ROWS = 8;
     private static final int COLUMNS = 8;
 
-    public BigBoard(List<Enemy> enemies) {
+    public BigBoard(final List<Enemy> enemies) {
         squares = new Enemy[ROWS][COLUMNS];
         int indexEnemy = 0;
-        SQUARE_LOOP: for (int row = 0; row < ROWS - 1; row++) {
+        SQUARE_LOOP: for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
                 if (indexEnemy < enemies.size()) {
                 	squares[row][column] = enemies.get(indexEnemy);
@@ -24,21 +25,46 @@ public class BigBoard implements Collection<Enemy> {
                 }
             }
         }
+        this.iterator = new BoardIterator(this);
     }
 
+	@Override
     public int getRows() {
         return ROWS;
     }
 
+	@Override
     public int getColumns() {
         return COLUMNS;
     }
 
-    public Enemy getEnemy(int row, int column) {
+	@Override
+    public Enemy getEnemy(final int row, final int column) {
         return squares[row][column];
     }
 
-	public String getAvatarSquare(int row, int column) {
+	@Override
+	public void deleteEnemy(final int row, final int column) {
+        SQUARE_LOOP: for (int rowCurrent = row; rowCurrent < ROWS; rowCurrent++) {
+            for (int columnCurrent = column; columnCurrent < COLUMNS; columnCurrent++) {
+            	if ((rowCurrent != ROWS - 1) || (columnCurrent != COLUMNS - 1)) {
+            		final int rowNext = rowCurrent + 1;
+            		final int columnNext = columnCurrent < COLUMNS - 1 ? columnCurrent + 1 : 0;
+                	final Enemy enemyNext = squares[rowNext][columnNext];
+                	if (enemyNext == null) {
+                		break SQUARE_LOOP;
+                	}
+                	squares[rowCurrent][columnCurrent] = enemyNext;
+            	} else {
+                	squares[rowCurrent][columnCurrent] = null;
+                    break SQUARE_LOOP;
+            	}
+            }
+        }
+    }
+
+	@Override
+	public String getAvatarSquare(final int row, final int column) {
 		final Enemy enemy = squares[row][column];
 		final StringBuilder avatarSquare = new StringBuilder();
 		if (enemy != null) {
@@ -62,8 +88,8 @@ public class BigBoard implements Collection<Enemy> {
 	}
 
 	@Override
-	public Iterator<Enemy> getIterator() {
-		return new BoardIterator(this);
+	public PatternsIterator<Enemy> getIterator() {
+		return this.iterator;
 	}
 
 }

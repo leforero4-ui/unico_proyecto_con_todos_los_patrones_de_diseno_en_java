@@ -1,15 +1,16 @@
 package main.application.driver.adapter.usecase.board;
 
-import main.application.driver.port.usecase.iterator.Iterator;
+import main.application.driver.port.usecase.iterator.BoardCollection;
+import main.application.driver.port.usecase.iterator.PatternsIterator;
 import main.domain.model.Enemy;
 
-public class BoardIterator implements Iterator<Enemy> {
-    private final BigBoard bigBoard;
+public class BoardIterator implements PatternsIterator<Enemy> {
+    private final BoardCollection<Enemy> boardCollection;
     private int row;
     private int column;
 
-    public BoardIterator(BigBoard bigBoard) {
-        this.bigBoard = bigBoard;
+    public BoardIterator(final BoardCollection<Enemy> boardCollection) {
+        this.boardCollection = boardCollection;
         this.row = 0;
         this.column = -1;
     }
@@ -19,13 +20,13 @@ public class BoardIterator implements Iterator<Enemy> {
 	public boolean hasNext() {
 		int columnNext = this.column + 1;
 		int rowNext = this.row;
-        if (columnNext >= this.bigBoard.getColumns()) {
+        if (columnNext >= this.boardCollection.getColumns()) {
         	columnNext = 0;
         	rowNext++;
         }
-        return rowNext < this.bigBoard.getRows()
-				&& columnNext < this.bigBoard.getColumns()
-				&& this.bigBoard.getEnemy(rowNext, columnNext) != null;
+        return rowNext < this.boardCollection.getRows()
+				&& columnNext < this.boardCollection.getColumns()
+				&& this.boardCollection.getEnemy(rowNext, columnNext) != null;
 	}
 
 	@Override
@@ -34,11 +35,16 @@ public class BoardIterator implements Iterator<Enemy> {
 	        return null;
 	    }
 		this.column++;
-        if (this.column >= this.bigBoard.getColumns()) {
+        if (this.column >= this.boardCollection.getColumns()) {
         	this.column = 0;
         	this.row++;
         }
-        return this.bigBoard.getEnemy(this.row, this.column);
+        return this.boardCollection.getEnemy(this.row, this.column);
+	}
+	
+	@Override
+	public void remove() {
+		this.boardCollection.deleteEnemy(row, column);
 	}
 
 
@@ -48,11 +54,11 @@ public class BoardIterator implements Iterator<Enemy> {
 	        return null;
 	    }
 		this.column++;
-        if (this.column >= this.bigBoard.getColumns()) {
+        if (this.column >= this.boardCollection.getColumns()) {
         	this.column = 0;
         	this.row++;
         }
-		return this.bigBoard.getAvatarSquare(this.row, this.column);
+		return this.boardCollection.getAvatarSquare(this.row, this.column);
 	}
 
 

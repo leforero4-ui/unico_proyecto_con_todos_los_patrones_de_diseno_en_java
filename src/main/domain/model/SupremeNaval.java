@@ -17,7 +17,7 @@ public class SupremeNaval extends Enemy {
 	}
 
 	@Override
-	public void receiveAttack(int attack) {
+	public void calculateDamage(int attack) {
 		this.life -= attack - 5;
 	}
 

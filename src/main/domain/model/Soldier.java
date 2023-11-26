@@ -6,7 +6,7 @@ public abstract class Soldier extends Enemy {
 	}
 	
 	@Override
-	public void receiveAttack(int attack) {
+	public void calculateDamage(int attack) {
 		this.life -= attack;
 	}
 

@@ -13,11 +13,15 @@ public class SquadronNaval extends Enemy {
 
 	@Override
 	public int getLife() {
+		this.calculateLife();
+		return super.getLife();
+	}
+	
+	private void calculateLife() {
 		this.life = 1;
 		for (Enemy enemy : this.squadron) {
 			this.life += enemy.getLife();
 		}
-		return super.getLife();
 	}
 
 	@Override
@@ -30,9 +34,10 @@ public class SquadronNaval extends Enemy {
 	}
 
 	@Override
-	public void receiveAttack(int attack) {
+	public void calculateDamage(int attack) {
 		if (this.squadron.size() > 0) {
-			this.squadron.get(this.squadron.size() - 1).receiveAttack(attack);
+			this.squadron.get(this.squadron.size() - 1).calculateDamage(attack);
+			this.calculateLife();
 		}
 	}
 
