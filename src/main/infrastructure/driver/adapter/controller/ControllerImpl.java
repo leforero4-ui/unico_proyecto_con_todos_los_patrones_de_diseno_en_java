@@ -13,7 +13,6 @@ import main.domain.model.ArmyFactory;
 import main.domain.model.ArmyNavalFactory;
 import main.domain.model.Player;
 import main.domain.model.PlayerBuilder;
-import main.infrastructure.driven.adapter.provider.ConsoleDrawable;
 import main.infrastructure.driven.adapter.provider.LanternaDrawable;
 
 public class ControllerImpl implements Controller {
@@ -23,8 +22,7 @@ public class ControllerImpl implements Controller {
 	private final Drawable drawable;
 	
 	public ControllerImpl() {
-		//this.drawable = new LanternaDrawable();
-		this.drawable = new ConsoleDrawable();
+		this.drawable = new LanternaDrawable();
 		if("1".equalsIgnoreCase(this.drawable.in("naval oprima: 1\r\nair oprima: cualquier tecla"))) {
 			this.drawable.out("naval:");
 			this.armyFactory = new ArmyNavalFactory();
@@ -72,8 +70,8 @@ public class ControllerImpl implements Controller {
 		String squares = this.gameableUseCase.startGame() + "\r\n";
 		String locationEnemy;
 		do {
-			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) a atacar\r\n99-99 para terminar:");
-			if (locationEnemy.contains("-")) {
+			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar(99-99 para terminar):");
+			if (locationEnemy != null && locationEnemy.contains("-")) {
 				final int row = Integer.parseInt(locationEnemy.split("-")[0]);
 				final int column = Integer.parseInt(locationEnemy.split("-")[1]);
 				squares = this.gameableUseCase.attack(row, column) + "\r\n";

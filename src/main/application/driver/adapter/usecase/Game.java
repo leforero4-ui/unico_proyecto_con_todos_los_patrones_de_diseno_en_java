@@ -53,7 +53,7 @@ public class Game implements GameableUseCase {
             squares.append(this.enemyIterator.getAvatarNext());
         }
 		this.enemyIterator.reset();
-        return "tablero: " + squares.toString() + "\n" + this.player.getAvatar();
+        return "tablero:\r\nenemigos: " + squares.toString() + "\r\njugador: " + this.player.getAvatar();
 	}
 
 	@Override

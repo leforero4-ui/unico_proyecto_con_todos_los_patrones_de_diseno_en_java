@@ -48,8 +48,13 @@ public class BigBoard implements BoardCollection<Enemy> {
         SQUARE_LOOP: for (int rowCurrent = row; rowCurrent < ROWS; rowCurrent++) {
             for (int columnCurrent = column; columnCurrent < COLUMNS; columnCurrent++) {
             	if ((rowCurrent != ROWS - 1) || (columnCurrent != COLUMNS - 1)) {
-            		final int rowNext = rowCurrent + 1;
+            		final int rowNext;
             		final int columnNext = columnCurrent < COLUMNS - 1 ? columnCurrent + 1 : 0;
+            		if (columnCurrent == COLUMNS - 1) {
+                		rowNext = rowCurrent < ROWS - 1 ? rowCurrent + 1 : 0;
+            		} else {
+            			rowNext = rowCurrent;
+            		}
                 	final Enemy enemyNext = squares[rowNext][columnNext];
                 	if (enemyNext == null) {
                 		break SQUARE_LOOP;

@@ -14,6 +14,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 public class LanternaDrawable implements Drawable {
+	private static final int SPLIT_TEXT = 70;
 	private Screen screen;
 	private WindowBasedTextGUI textGUI;
 
@@ -22,7 +23,7 @@ public class LanternaDrawable implements Drawable {
 			final DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
 			final Terminal terminal = terminalFactory.createTerminal();
 			this.screen = new TerminalScreen(terminal);
-			this.textGUI = new MultiWindowTextGUI(screen);
+			this.textGUI = new MultiWindowTextGUI(this.screen);
 		} catch (IOException e) {
             System.out.println(e.getMessage());
 		}
@@ -31,6 +32,7 @@ public class LanternaDrawable implements Drawable {
 	@Override
 	public String in(String text) {
 		try {
+			text = this.addLineBreaks(text);
         	this.screen.startScreen();
         	
         	return new TextInputDialogBuilder()
@@ -59,5 +61,31 @@ public class LanternaDrawable implements Drawable {
             System.out.println(e.getMessage());
 		}
 	}
+	
+    private String addLineBreaks(String input) {
+        StringBuilder result = new StringBuilder();
+        String[] lines = input.split("\\n");
+
+        for (String line : lines) {
+            StringBuilder currentLine = new StringBuilder();
+
+            for (int i = 0; i < line.length(); i++) {
+                char currentChar = line.charAt(i);
+
+                if (currentLine.length() == SPLIT_TEXT) {
+                    result.append(currentLine.toString().trim()).append("\r\n");
+                    currentLine.setLength(0);
+                }
+
+                currentLine.append(currentChar);
+            }
+
+            if (currentLine.length() > 0) {
+                result.append(currentLine.toString().trim()).append("\r\n");
+            }
+        }
+
+        return result.toString();
+    }
 
 }
