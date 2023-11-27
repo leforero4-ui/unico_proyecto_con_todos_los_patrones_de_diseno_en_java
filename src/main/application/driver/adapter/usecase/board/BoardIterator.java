@@ -45,6 +45,15 @@ public class BoardIterator implements PatternsIterator<Enemy> {
 	@Override
 	public void remove() {
 		this.boardCollection.deleteEnemy(row, column);
+		this.column--;
+        if (this.column < 0) {
+        	this.column = this.boardCollection.getColumns() - 1;
+        	this.row--;
+        	if (this.row < 0) {
+                this.row = 0;
+                this.column = -1;
+        	}
+        }
 	}
 
 
