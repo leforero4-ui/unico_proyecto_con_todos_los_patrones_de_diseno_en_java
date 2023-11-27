@@ -57,6 +57,7 @@ public class BigBoard implements BoardCollection<Enemy> {
             		}
                 	final Enemy enemyNext = squares[rowNext][columnNext];
                 	if (enemyNext == null) {
+                    	squares[rowCurrent][columnCurrent] = null;
                 		break SQUARE_LOOP;
                 	}
                 	squares[rowCurrent][columnCurrent] = enemyNext;
