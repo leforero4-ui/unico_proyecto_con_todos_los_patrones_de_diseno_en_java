@@ -22,27 +22,26 @@ public class Game implements GameableUseCase {
 	}
 
 	@Override
-	public String startGame() {
+	public void startGame() {
 		final List<Enemy> enemies = enemyMethod.createEnemies();
 		this.board = new BigBoard(enemies);
 		this.enemyIterator = board.getIterator();
-		return this.squars();
 	}
 
 	@Override
-	public String attack(final int row, final int column) {
+	public boolean attackAndCounterAttack(final int row, final int column) {
 		final Enemy enemy = board.getEnemy(row, column);
 		enemy.receiveAttack(player.getAttackLevel());
 		if (enemy.getLife() <= 0) {
 			this.deleteEnemy(enemy);
+			return false;
 		} else {
 			this.counterAttack(enemy);
+			return true;
 		}
-		return this.squars();
 	}
 	
-	@Override
-	public void deleteEnemy(final Enemy enemy) {
+	private void deleteEnemy(final Enemy enemy) {
 		while (this.enemyIterator.hasNext()) {
 			if(this.enemyIterator.getNext().equals(enemy)) {
 				this.enemyIterator.remove();
@@ -51,8 +50,9 @@ public class Game implements GameableUseCase {
         }
 		this.enemyIterator.reset();
 	}
-	
-	private String squars() {
+
+	@Override
+	public String getSquars() {
 		final StringBuilder squares = new StringBuilder();
 		while (this.enemyIterator.hasNext()) {
             squares.append(this.enemyIterator.getAvatarNext());
@@ -67,8 +67,7 @@ public class Game implements GameableUseCase {
         		+ "jugador: {X-X:" + this.player.getAvatar() + ":" + this.player.getLife() + ":" + this.player.getAttackLevel() + "}\r\n";
 	}
 
-	@Override
-	public void counterAttack(final Enemy enemy) {
+	private void counterAttack(final Enemy enemy) {
 		this.player.receiveAttack(enemy.getAttackLevel());
 	}
 

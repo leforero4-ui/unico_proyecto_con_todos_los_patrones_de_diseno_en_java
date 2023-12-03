@@ -67,14 +67,18 @@ public class ControllerImpl implements Controller {
 	
 	@Override
 	public void startGame() {
-		String squares = this.gameableUseCase.startGame() + "\r\n";
+		this.gameableUseCase.startGame();
+		String squares;
+		
 		String locationEnemy;
 		do {
+			squares = this.gameableUseCase.getSquars() + "\r\n";
 			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar;(99-99 para terminar juego):");
 			if (locationEnemy != null && locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
 				final int row = Integer.parseInt(locationEnemy.split("-")[0]);
 				final int column = Integer.parseInt(locationEnemy.split("-")[1]);
-				squares = this.gameableUseCase.attack(row, column) + "\r\n";
+				final boolean counterattacked = this.gameableUseCase.attackAndCounterAttack(row, column);
+				this.drawable.out(counterattacked ? "Se ha lanzado contraataque\r\n" : "Enemigo eliminado\r\n");
 			}
 		} while (!locationEnemy.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
 		
