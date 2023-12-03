@@ -20,7 +20,7 @@ public class ArmyNavalFactory implements ArmyFactory {
 	}
 
 	@Override
-	public Enemy getSupreme() {
+	public Supreme getSupreme() {
 		return SupremeNaval.getInstance();
 	}
 

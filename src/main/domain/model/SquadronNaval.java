@@ -34,9 +34,9 @@ public class SquadronNaval extends Enemy {
 	}
 
 	@Override
-	public void calculateDamage(int attack) {
+	public void receiveAttack(int attack) {
 		if (this.squadron.size() > 0) {
-			this.squadron.get(this.squadron.size() - 1).calculateDamage(attack);
+			this.squadron.get(this.squadron.size() - 1).receiveAttack(attack);
 			this.calculateLife();
 		}
 	}

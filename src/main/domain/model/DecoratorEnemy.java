@@ -14,7 +14,7 @@ public abstract class DecoratorEnemy extends Enemy {
 	}
 
 	@Override
-	public void calculateDamage(int attack) {
-		this.enemy.calculateDamage(attack);
+	public void receiveAttack(int attack) {
+		this.enemy.receiveAttack(attack);
 	}
 }

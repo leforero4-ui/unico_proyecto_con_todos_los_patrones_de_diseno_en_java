@@ -34,9 +34,9 @@ public class SquadronAir extends Enemy {
 	}
 
 	@Override
-	public void calculateDamage(int attack) {
+	public void receiveAttack(int attack) {
 		if (this.squadron.size() > 0) {
-			this.squadron.get(0).calculateDamage(attack);
+			this.squadron.get(0).receiveAttack(attack);
 			this.calculateLife();
 		}
 	}

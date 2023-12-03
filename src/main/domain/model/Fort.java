@@ -7,8 +7,8 @@ public class Fort extends DecoratorEnemy {
 	}
 
 	@Override
-	public void calculateDamage(int attack) {
-		super.calculateDamage(attack - 2);
+	public void receiveAttack(int attack) {
+		super.receiveAttack(attack - 2);
 	}
 
 	@Override

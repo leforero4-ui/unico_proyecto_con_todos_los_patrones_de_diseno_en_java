@@ -19,7 +19,7 @@ public class Poison implements Skillfull {
 
 	@Override
 	public String getIdentifier() {
-		return "P";
+		return "V";
 	}
 
 }

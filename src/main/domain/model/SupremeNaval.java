@@ -1,6 +1,6 @@
 package main.domain.model;
 
-public class SupremeNaval extends Enemy {
+public class SupremeNaval extends Supreme {
 	
 	private static SupremeNaval instance;
 	
@@ -14,11 +14,6 @@ public class SupremeNaval extends Enemy {
 		}
 		
 		return instance;
-	}
-
-	@Override
-	public void calculateDamage(int attack) {
-		this.life -= attack - 5;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ creacional
 
 * factory method: lógica de crear villanos por niveles
 
-* singleton: para crear el villano supremo que aparecera durante unos segundos en todos los niveles
+* singleton: para crear el villano supremo, debe ser único
 
 * prototype: para clonar los soldados cuando se están creando los villanos por niveles
 
@@ -46,3 +46,5 @@ comportamiento
 * strategy: estrategía(habilidad) para calcular el nivel de ataque de cada enemigo
 
 * mediator: interface que controla los ataques y los contraataques entre el jugador y los enemigos, en este caso GameableUseCase.java
+
+* observer: para que los protectores del enemigo supremo reciban un porcentaje del ataque

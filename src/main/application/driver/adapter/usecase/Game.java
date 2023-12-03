@@ -32,7 +32,12 @@ public class Game implements GameableUseCase {
 	@Override
 	public String attack(final int row, final int column) {
 		final Enemy enemy = board.getEnemy(row, column);
-		enemy.receiveAttack(player.getAttackLevel(), this);
+		enemy.receiveAttack(player.getAttackLevel());
+		if (enemy.getLife() <= 0) {
+			this.deleteEnemy(enemy);
+		} else {
+			this.counterAttack(enemy);
+		}
 		return this.squars();
 	}
 	
@@ -53,7 +58,13 @@ public class Game implements GameableUseCase {
             squares.append(this.enemyIterator.getAvatarNext());
         }
 		this.enemyIterator.reset();
-        return "tablero:\r\nenemigos: " + squares.toString() + "\r\njugador: " + this.player.getAvatar();
+        return "B=bomba,M=multiples disparos,F=fortaleza,V=veneno,A=aire,N=naval,S=soldado,E=escuadrón,M=maestro\r\n"
+        		+ "\r\n"
+        		+ "tablero:{fila-columna:avatar:vida:ataque}\r\n"
+        		+ "\r\n"
+        		+ "enemigos: " + squares.toString() + "\r\n"
+                + "\r\n"
+        		+ "jugador: {X-X:" + this.player.getAvatar() + ":" + this.player.getLife() + ":" + this.player.getAttackLevel() + "}\r\n";
 	}
 
 	@Override

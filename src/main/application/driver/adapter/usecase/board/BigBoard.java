@@ -79,11 +79,12 @@ public class BigBoard implements BoardCollection<Enemy> {
 			avatarSquare.append("-");
 			avatarSquare.append(column);
 			avatarSquare.append(":");
-			avatarSquare.append(enemy.getAvatar(""));
-			final int avatarSquareLength = avatarSquare.length();
-			if (avatarSquareLength > 0) {
-				avatarSquare.deleteCharAt(avatarSquareLength - 1);
-			}
+			final String avatar = enemy.getAvatar("");
+			avatarSquare.append(!avatar.isEmpty() ? avatar.substring(0, avatar.length() - 1) : "");
+			avatarSquare.append(":");
+			avatarSquare.append(enemy.getLife());
+			avatarSquare.append(":");
+			avatarSquare.append(enemy.getAttackLevel());
 			avatarSquare.append("}");
 			if (column == COLUMNS - 1) {
 				avatarSquare.append("\n");

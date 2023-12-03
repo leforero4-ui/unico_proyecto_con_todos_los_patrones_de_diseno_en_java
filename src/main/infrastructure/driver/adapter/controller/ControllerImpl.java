@@ -20,6 +20,7 @@ public class ControllerImpl implements Controller {
 	private GameableUseCase gameableUseCase;
 	private final ArmyFactory armyFactory;
 	private final Drawable drawable;
+	private Player player;
 	
 	public ControllerImpl() {
 		this.drawable = new LanternaDrawable();
@@ -48,11 +49,11 @@ public class ControllerImpl implements Controller {
 				yield new EnemyHighMethod(armyFactory);
 			}
 		};
-
-		this.gameableUseCase = new Game(enemyMethod, this.createPlayer());
+		this.createPlayer();
+		this.gameableUseCase = new Game(enemyMethod, this.player);
 	}
 	
-	private Player createPlayer() {
+	private void createPlayer() {
 		this.drawable.out("crear jugador");
 		final PlayerBuilder playerBuilder = new PlayerBuilder();
 		playerBuilder.name(this.drawable.in("nombre:"));
@@ -61,8 +62,7 @@ public class ControllerImpl implements Controller {
 		playerBuilder.typeShirt(this.drawable.in("tipo de camisa:"));
 		playerBuilder.typePant(this.drawable.in("tipo de pantalón:"));
 		playerBuilder.typeShoes(this.drawable.in("tipo de zapatos:"));
-		
-		return armyFactory.createPlayer(playerBuilder);
+		this.player = this.armyFactory.createPlayer(playerBuilder);
 	}
 	
 	@Override
@@ -70,13 +70,15 @@ public class ControllerImpl implements Controller {
 		String squares = this.gameableUseCase.startGame() + "\r\n";
 		String locationEnemy;
 		do {
-			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar(99-99 para terminar):");
-			if (locationEnemy != null && locationEnemy.contains("-")) {
+			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar;(99-99 para terminar juego):");
+			if (locationEnemy != null && locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
 				final int row = Integer.parseInt(locationEnemy.split("-")[0]);
 				final int column = Integer.parseInt(locationEnemy.split("-")[1]);
 				squares = this.gameableUseCase.attack(row, column) + "\r\n";
 			}
-		} while (locationEnemy != "99-99");
+		} while (!locationEnemy.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
+		
+		this.drawable.out("fin del juego");
 	}
 
 	@Override

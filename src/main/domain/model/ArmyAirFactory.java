@@ -20,7 +20,7 @@ public class ArmyAirFactory implements ArmyFactory {
 	}
 
 	@Override
-	public Enemy getSupreme() {
+	public Supreme getSupreme() {
 		return SupremeAir.getInstance();
 	}
 
