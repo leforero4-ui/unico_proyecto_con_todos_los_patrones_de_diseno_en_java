@@ -10,6 +10,11 @@ public abstract class Soldier extends Enemy {
 		this.life -= attack;
 	}
 
+	@Override
+	public void acceptVisit(Visitor visitor) {
+		visitor.visitSoldier(this);
+	}
+
 	public abstract Soldier clone();
 	public abstract String getTypeEye();
 	public abstract String getTypeHair();

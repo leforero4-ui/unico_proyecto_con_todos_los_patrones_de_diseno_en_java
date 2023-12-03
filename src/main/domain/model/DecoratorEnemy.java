@@ -17,4 +17,9 @@ public abstract class DecoratorEnemy extends Enemy {
 	public void receiveAttack(int attack) {
 		this.enemy.receiveAttack(attack);
 	}
+
+	@Override
+	public void acceptVisit(Visitor visitor) {
+		this.enemy.acceptVisit(visitor);
+	}
 }

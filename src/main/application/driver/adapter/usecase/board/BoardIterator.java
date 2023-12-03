@@ -3,6 +3,7 @@ package main.application.driver.adapter.usecase.board;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
 import main.domain.model.Enemy;
+import main.domain.model.Visitor;
 
 public class BoardIterator implements PatternsIterator<Enemy> {
     private final BoardCollection<Enemy> boardCollection;
@@ -34,11 +35,7 @@ public class BoardIterator implements PatternsIterator<Enemy> {
 		if (!hasNext()) {
 	        return null;
 	    }
-		this.column++;
-        if (this.column >= this.boardCollection.getColumns()) {
-        	this.column = 0;
-        	this.row++;
-        }
+		this.updateRowAndColumnToNext();
         return this.boardCollection.getEnemy(this.row, this.column);
 	}
 	
@@ -62,11 +59,7 @@ public class BoardIterator implements PatternsIterator<Enemy> {
 		if (!hasNext()) {
 	        return null;
 	    }
-		this.column++;
-        if (this.column >= this.boardCollection.getColumns()) {
-        	this.column = 0;
-        	this.row++;
-        }
+		this.updateRowAndColumnToNext();
 		return this.boardCollection.getAvatarSquare(this.row, this.column);
 	}
 
@@ -75,6 +68,22 @@ public class BoardIterator implements PatternsIterator<Enemy> {
 	public void reset() {
         this.row = 0;
         this.column = -1;
+	}
+
+
+	@Override
+	public void visit(final Visitor visitor) {
+		this.updateRowAndColumnToNext();
+		final Enemy enemy = this.boardCollection.getEnemy(row, column);
+		enemy.acceptVisit(visitor);
+	}
+	
+	private void updateRowAndColumnToNext() {
+		this.column++;
+        if (this.column >= this.boardCollection.getColumns()) {
+        	this.column = 0;
+        	this.row++;
+        }
 	}
 
 }

@@ -22,4 +22,6 @@ public abstract class Enemy {
 	public abstract void receiveAttack(final int attack);
 	
 	public abstract String getAvatar(final String prefix);
+	
+	public abstract void acceptVisit(Visitor visitor);
 }

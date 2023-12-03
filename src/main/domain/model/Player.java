@@ -27,6 +27,10 @@ public abstract class Player {
 	}
 	
 	public abstract String getAvatar();
+	
+	public void acceptVisit(Visitor visitor) {
+		visitor.visitPlayer(this);
+	}
 
 	public int getLife() {
 		return this.life;

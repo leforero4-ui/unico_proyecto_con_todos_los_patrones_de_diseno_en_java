@@ -8,7 +8,9 @@ import main.application.driver.port.usecase.GameableUseCase;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
 import main.domain.model.Enemy;
+import main.domain.model.Healable;
 import main.domain.model.Player;
+import main.domain.model.Visitor;
 
 public class Game implements GameableUseCase {
 	private final EnemyMethod enemyMethod;
@@ -31,7 +33,7 @@ public class Game implements GameableUseCase {
 	@Override
 	public boolean attackAndCounterAttack(final int row, final int column) {
 		final Enemy enemy = board.getEnemy(row, column);
-		enemy.receiveAttack(player.getAttackLevel());
+		enemy.receiveAttack(this.player.getAttackLevel());
 		if (enemy.getLife() <= 0) {
 			this.deleteEnemy(enemy);
 			return false;
@@ -69,6 +71,16 @@ public class Game implements GameableUseCase {
 
 	private void counterAttack(final Enemy enemy) {
 		this.player.receiveAttack(enemy.getAttackLevel());
+	}
+
+	@Override
+	public void healing() {
+		final Visitor heleable = new Healable();
+		while (this.enemyIterator.hasNext()) {
+			this.enemyIterator.visit(heleable);
+        }
+		this.enemyIterator.reset();
+		this.player.acceptVisit(heleable);
 	}
 
 }

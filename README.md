@@ -48,3 +48,5 @@ comportamiento
 * mediator: interface que controla los ataques y los contraataques entre el jugador y los enemigos, en este caso GameableUseCase.java
 
 * observer: para que los protectores del enemigo supremo reciban un porcentaje del ataque
+
+* visitor: debido a que los enemigos y el jugador no deberían poder recuperarse se saca la funcionalidad aparte para que no afecte la clase Enemy

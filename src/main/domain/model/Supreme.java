@@ -14,6 +14,11 @@ public abstract class Supreme extends Enemy {
 	}
 
 	@Override
+	public void acceptVisit(Visitor visitor) {
+		visitor.visitSupreme(this);
+	}
+
+	@Override
 	public void receiveAttack(int attack) {
 		this.life -= this.notifyAttackToProtectors(attack);
 	}

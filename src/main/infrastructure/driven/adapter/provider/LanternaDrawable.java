@@ -50,6 +50,7 @@ public class LanternaDrawable implements Drawable {
 	@Override
 	public void out(String text) {
 		try {
+			text = this.addLineBreaks(text);
 			this.screen.startScreen();
 			
 			new MessageDialogBuilder()

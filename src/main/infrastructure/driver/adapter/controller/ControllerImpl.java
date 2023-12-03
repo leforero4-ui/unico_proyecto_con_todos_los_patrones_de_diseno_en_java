@@ -75,8 +75,16 @@ public class ControllerImpl implements Controller {
 			squares = this.gameableUseCase.getSquars() + "\r\n";
 			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar;(99-99 para terminar juego):");
 			if (locationEnemy != null && locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
-				final int row = Integer.parseInt(locationEnemy.split("-")[0]);
-				final int column = Integer.parseInt(locationEnemy.split("-")[1]);
+				final String[] locationEnemySplit = locationEnemy.split("-");
+				final int row = Integer.parseInt(locationEnemySplit[0]);
+				final int column = Integer.parseInt(locationEnemySplit[1]);
+				if (locationEnemySplit.length > 2) {
+					final String secretCode = locationEnemy.split("-")[2];
+					if (secretCode.equalsIgnoreCase("recuperación") ) {
+						this.gameableUseCase.healing();
+						this.drawable.out(this.gameableUseCase.getSquars() + "\r\nSe ha sanado\r\ncontinuara el ataque");
+					}
+				}
 				final boolean counterattacked = this.gameableUseCase.attackAndCounterAttack(row, column);
 				this.drawable.out(counterattacked ? "Se ha lanzado contraataque\r\n" : "Enemigo eliminado\r\n");
 			}

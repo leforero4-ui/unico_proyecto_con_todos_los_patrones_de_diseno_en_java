@@ -4,4 +4,5 @@ public interface GameableUseCase {
 	void startGame();
 	boolean attackAndCounterAttack(int row, int column);
 	String getSquars();
+	void healing();
 }
