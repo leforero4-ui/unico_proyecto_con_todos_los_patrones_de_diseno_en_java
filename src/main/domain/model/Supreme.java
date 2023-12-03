@@ -22,7 +22,7 @@ public abstract class Supreme extends Enemy {
 		this.protectors.add(enemy);
 	}
 	
-	public int notifyAttackToProtectors(int attack) {
+	private int notifyAttackToProtectors(int attack) {
 		final List<Enemy> enemyDeletes = new ArrayList<>();
 		final AtomicInteger remnantAttack = new AtomicInteger(attack);
 		protectors.forEach(enemy -> {
