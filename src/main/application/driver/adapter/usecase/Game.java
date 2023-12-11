@@ -1,9 +1,15 @@
 package main.application.driver.adapter.usecase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import main.application.driver.adapter.usecase.board.BigBoard;
+import main.application.driver.adapter.usecase.expression.AndExpression;
+import main.application.driver.adapter.usecase.expression.Context;
+import main.application.driver.adapter.usecase.expression.OrExpression;
+import main.application.driver.adapter.usecase.expression.WordExpression;
 import main.application.driver.port.usecase.EnemyMethod;
+import main.application.driver.port.usecase.Expression;
 import main.application.driver.port.usecase.GameableUseCase;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
@@ -54,10 +60,10 @@ public class Game implements GameableUseCase {
 	}
 
 	@Override
-	public String getSquars() {
+	public String getStringAvatarSquares() {
 		final StringBuilder squares = new StringBuilder();
 		while (this.enemyIterator.hasNext()) {
-            squares.append(this.enemyIterator.getAvatarNext());
+            squares.append(this.enemyIterator.getAvatarSquareNext());
         }
 		this.enemyIterator.reset();
         return "B=bomba,M=multiples disparos,F=fortaleza,V=veneno,A=aire,N=naval,S=soldado,E=escuadrón,M=maestro\r\n"
@@ -81,6 +87,65 @@ public class Game implements GameableUseCase {
         }
 		this.enemyIterator.reset();
 		this.player.acceptVisit(heleable);
+	}
+
+	private List<String> getAvatarSquares() {
+		final List<String> avatarSquares = new ArrayList<>();
+		while (this.enemyIterator.hasNext()) {
+			avatarSquares.add(this.enemyIterator.getAvatarSquareNext());
+        }
+		this.enemyIterator.reset();
+		return avatarSquares;
+	}
+
+	@Override
+	public String getEnemies(final String stringExpression) {
+		final Expression expression = this.parseExpression(this.prepareStringExpression(stringExpression));
+		final Context context = new Context(this.getAvatarSquares());
+		final StringBuilder avatarSquaresStringBuilder = new StringBuilder();
+		List<String> avatarSquares = expression.interpret(context);
+		avatarSquares.forEach(avatarSquare -> avatarSquaresStringBuilder.append(avatarSquare + "\r\n"));
+		return avatarSquaresStringBuilder.toString();
+	}
+	
+	private String prepareStringExpression(String stringExpression) {
+		stringExpression = stringExpression.substring("buscar:".length());
+		stringExpression = stringExpression.replaceAll("\\(", " \\( ");
+		stringExpression = stringExpression.replaceAll("\\)", " \\) ");
+		stringExpression = stringExpression.replaceAll("  ", " ");
+		stringExpression = stringExpression.trim();
+		return stringExpression;
+	}
+	
+	private Expression parseExpression(final String input) {
+		final String[] tokens = input.split(" ", 3);
+        
+        String firstToken = tokens[0];
+    	if (firstToken.equalsIgnoreCase("(")) {
+        	final String[] seconPartToken = input.split(" ", 2);
+        	return this.parseExpression(seconPartToken[1]);
+    	}
+        
+        if (tokens.length != 3) {
+        	return new WordExpression(firstToken);
+        }
+        
+        final String operator = tokens[1];
+        final String secondToken = tokens[2];
+        
+        return this.expressionByOperator(operator, firstToken, secondToken);
+	}
+	
+	private Expression expressionByOperator(final String operator, final String firstToken, final String secondToken) {
+        return switch(operator.toLowerCase()) {
+        case "y" -> new AndExpression(new WordExpression(firstToken), this.parseExpression(secondToken));
+        case "o" -> new OrExpression(new WordExpression(firstToken), this.parseExpression(secondToken));
+        case ")" -> {
+        	final String[] seconPartToken = secondToken.split(" ", 2);
+        	yield this.expressionByOperator(seconPartToken[0], firstToken, seconPartToken[1]);
+        }
+        default -> new AndExpression(new WordExpression(firstToken), this.parseExpression(secondToken));
+        };
 	}
 
 }

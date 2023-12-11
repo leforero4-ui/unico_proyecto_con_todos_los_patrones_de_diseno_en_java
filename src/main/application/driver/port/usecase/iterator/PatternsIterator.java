@@ -7,6 +7,6 @@ public interface PatternsIterator<T> {
     T getNext();
 	void remove();
 	void visit(Visitor visitor);
-    String getAvatarNext();
+    String getAvatarSquareNext();
     void reset();
 }

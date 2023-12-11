@@ -1,4 +1,4 @@
-package main.application.driver.adapter.usecase;
+package main.application.driver.adapter.usecase.factory_enemies;
 
 import java.util.ArrayList;
 import java.util.List;

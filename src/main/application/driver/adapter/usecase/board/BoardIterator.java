@@ -55,7 +55,7 @@ public class BoardIterator implements PatternsIterator<Enemy> {
 
 
 	@Override
-	public String getAvatarNext() {
+	public String getAvatarSquareNext() {
 		if (!hasNext()) {
 	        return null;
 	    }

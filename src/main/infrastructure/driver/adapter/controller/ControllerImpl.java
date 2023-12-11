@@ -1,10 +1,10 @@
 package main.infrastructure.driver.adapter.controller;
 
 import main.application.driven.port.provider.Drawable;
-import main.application.driver.adapter.usecase.EnemyBasicMethod;
-import main.application.driver.adapter.usecase.EnemyHighMethod;
-import main.application.driver.adapter.usecase.EnemyMiddleMethod;
 import main.application.driver.adapter.usecase.Game;
+import main.application.driver.adapter.usecase.factory_enemies.EnemyBasicMethod;
+import main.application.driver.adapter.usecase.factory_enemies.EnemyHighMethod;
+import main.application.driver.adapter.usecase.factory_enemies.EnemyMiddleMethod;
 import main.application.driver.port.controller.Controller;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.GameableUseCase;
@@ -72,8 +72,8 @@ public class ControllerImpl implements Controller {
 		
 		String locationEnemy;
 		do {
-			squares = this.gameableUseCase.getSquars() + "\r\n";
-			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar;(99-99 para terminar juego):");
+			squares = this.gameableUseCase.getStringAvatarSquares() + "\r\n";
+			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar;\r\nescriba 'buscar:' seguido de los tipos de enemigos a buscar, ejemplo soldado y escuadron y (aire o naval)\r\n(99-99 para terminar juego)");
 			if (locationEnemy != null && locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
 				final String[] locationEnemySplit = locationEnemy.split("-");
 				final int row = Integer.parseInt(locationEnemySplit[0]);
@@ -82,13 +82,15 @@ public class ControllerImpl implements Controller {
 					final String secretCode = locationEnemy.split("-")[2];
 					if (secretCode.equalsIgnoreCase("recuperación") ) {
 						this.gameableUseCase.healing();
-						this.drawable.out(this.gameableUseCase.getSquars() + "\r\nSe ha sanado\r\ncontinuara el ataque");
+						this.drawable.out(this.gameableUseCase.getStringAvatarSquares() + "\r\nSe ha sanado\r\ncontinuara el ataque");
 					}
 				}
 				final boolean counterattacked = this.gameableUseCase.attackAndCounterAttack(row, column);
 				this.drawable.out(counterattacked ? "Se ha lanzado contraataque\r\n" : "Enemigo eliminado\r\n");
+			} else if (locationEnemy != null && locationEnemy.startsWith("buscar:")) {
+				this.drawable.out(this.gameableUseCase.getEnemies(locationEnemy));
 			}
-		} while (!locationEnemy.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
+		} while (locationEnemy != null && !locationEnemy.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
 		
 		this.drawable.out("fin del juego");
 	}
