@@ -52,7 +52,7 @@ comportamiento
 * visitor: debido a que los enemigos y el jugador no deberían poder recuperarse se saca la funcionalidad aparte para que no afecte las clases Soldier, Squadron, Supreme y Player
 
 * interpreter: para buscar enemigos por tipos en el tablero  
-enemigo ::= 'soldado'|'escuadron'|'supremo'|'fortaleza'  
+expresión ::= enemigo | conjución | alternativa | '('expresión')'  
+enemigo ::= 'soldado' | 'escuadron' | 'supremo' | 'fortaleza'  
 conjución ::= enemigo '&' enemigo  
-alternativa ::= enemigo '|' enemigo  
-expresión ::= enemigo | conjución | alternativa | '('expresión')'
+alternativa ::= enemigo '|' enemigo
