@@ -4,10 +4,10 @@ import java.util.List;
 
 import main.application.driver.port.usecase.Expression;
 
-public class WordExpression implements Expression {
+public class EnemyExpression implements Expression {
 	private final String word;
 
-	public WordExpression(String word) {
+	public EnemyExpression(String word) {
 		this.word = switch(word.toLowerCase()) {
 		case "soldado" -> "S";
 		case "aire" -> "A";

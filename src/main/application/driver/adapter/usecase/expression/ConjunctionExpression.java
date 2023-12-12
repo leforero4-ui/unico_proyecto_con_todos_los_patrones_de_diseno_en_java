@@ -5,11 +5,11 @@ import java.util.List;
 
 import main.application.driver.port.usecase.Expression;
 
-public class AndExpression implements Expression {
+public class ConjunctionExpression implements Expression {
 	private final Expression leftExpression;
 	private final Expression rightExpression;
 	
-	public AndExpression(final Expression leftExpression, final Expression rightExpression) {
+	public ConjunctionExpression(final Expression leftExpression, final Expression rightExpression) {
 		this.leftExpression = leftExpression;
 		this.rightExpression = rightExpression;
 	}

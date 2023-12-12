@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.application.driver.adapter.usecase.board.BigBoard;
-import main.application.driver.adapter.usecase.expression.AndExpression;
+import main.application.driver.adapter.usecase.expression.ConjunctionExpression;
 import main.application.driver.adapter.usecase.expression.Context;
-import main.application.driver.adapter.usecase.expression.OrExpression;
-import main.application.driver.adapter.usecase.expression.WordExpression;
+import main.application.driver.adapter.usecase.expression.AlternativeExpression;
+import main.application.driver.adapter.usecase.expression.EnemyExpression;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.Expression;
 import main.application.driver.port.usecase.GameableUseCase;
@@ -117,6 +117,7 @@ public class Game implements GameableUseCase {
 		return stringExpression;
 	}
 	
+	//recurrencia
 	private Expression parseExpression(final String input) {
 		final String[] tokens = input.split(" ", 3);
         
@@ -127,7 +128,7 @@ public class Game implements GameableUseCase {
     	}
         
         if (tokens.length != 3) {
-        	return new WordExpression(firstToken);
+        	return new EnemyExpression(firstToken);
         }
         
         final String operator = tokens[1];
@@ -135,16 +136,17 @@ public class Game implements GameableUseCase {
         
         return this.expressionByOperator(operator, firstToken, secondToken);
 	}
-	
+
+	//recurrencia
 	private Expression expressionByOperator(final String operator, final String firstToken, final String secondToken) {
         return switch(operator.toLowerCase()) {
-        case "y" -> new AndExpression(new WordExpression(firstToken), this.parseExpression(secondToken));
-        case "o" -> new OrExpression(new WordExpression(firstToken), this.parseExpression(secondToken));
+        case "y","&" -> new ConjunctionExpression(new EnemyExpression(firstToken), this.parseExpression(secondToken));
+        case "o","|" -> new AlternativeExpression(new EnemyExpression(firstToken), this.parseExpression(secondToken));
         case ")" -> {
         	final String[] seconPartToken = secondToken.split(" ", 2);
         	yield this.expressionByOperator(seconPartToken[0], firstToken, seconPartToken[1]);
         }
-        default -> new AndExpression(new WordExpression(firstToken), this.parseExpression(secondToken));
+        default -> new ConjunctionExpression(new EnemyExpression(firstToken), this.parseExpression(secondToken));
         };
 	}
 

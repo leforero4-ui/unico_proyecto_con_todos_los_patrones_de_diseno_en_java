@@ -7,11 +7,11 @@ import java.util.Set;
 
 import main.application.driver.port.usecase.Expression;
 
-public class OrExpression implements Expression {
+public class AlternativeExpression implements Expression {
 	private final Expression leftExpression;
 	private final Expression rightExpression;
 	
-	public OrExpression(final Expression leftExpression, final Expression rightExpression) {
+	public AlternativeExpression(final Expression leftExpression, final Expression rightExpression) {
 		this.leftExpression = leftExpression;
 		this.rightExpression = rightExpression;
 	}
