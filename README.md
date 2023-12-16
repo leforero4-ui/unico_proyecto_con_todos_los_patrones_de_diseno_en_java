@@ -41,3 +41,4 @@ expresión ::= enemigo | conjución | alternativa | '('expresión')'
 enemigo ::= 'soldado' | 'escuadron' | 'supremo' | 'fortaleza'  
 conjución ::= enemigo '&' enemigo  
 alternativa ::= enemigo '|' enemigo
+* **State**: estado del enemigo para calcular el contraataque: dormido, confundido, o enfurecido

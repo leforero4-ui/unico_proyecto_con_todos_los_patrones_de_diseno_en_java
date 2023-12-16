@@ -39,12 +39,13 @@ public class Game implements GameableUseCase {
 	@Override
 	public boolean attackAndCounterAttack(final int row, final int column) {
 		final Enemy enemy = board.getEnemy(row, column);
-		enemy.receiveAttack(this.player.getAttackLevel());
+		final int playerAttackLevel = this.player.getAttackLevel();
+		enemy.receiveAttack(playerAttackLevel);
 		if (enemy.getLife() <= 0) {
 			this.deleteEnemy(enemy);
 			return false;
 		} else {
-			this.counterAttack(enemy);
+			this.counterAttack(playerAttackLevel, enemy);
 			return true;
 		}
 	}
@@ -75,8 +76,8 @@ public class Game implements GameableUseCase {
         		+ "jugador: {X-X:" + this.player.getAvatar() + ":" + this.player.getLife() + ":" + this.player.getAttackLevel() + "}\r\n";
 	}
 
-	private void counterAttack(final Enemy enemy) {
-		this.player.receiveAttack(enemy.getAttackLevel());
+	private void counterAttack(final int attackLevelReceived, final Enemy enemy) {
+		this.player.receiveAttack(enemy.getCounterAttackLevel(attackLevelReceived));
 	}
 
 	@Override
