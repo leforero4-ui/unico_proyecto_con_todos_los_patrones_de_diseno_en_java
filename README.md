@@ -20,7 +20,7 @@ creacional
 estructural
 
 * **Composite**: crear infanteria con sus escuadrones y soldados que ataquen al mismo tiempo
-* **Flyweight**: compartir la ropa de los soldados (estado intrinseco/extrinseco)
+* **Flyweight**: compartir la ropa de los soldados (estado intrinseco(flyweight) = ropa / estado extrinseco = vida)
 * **Facade**: interface expuesta a las aplicaciones ocultando las complejidades del juego, logros, y estadisticas, en este caso la clase Controller.java
 * **Adapter**: usar librerias externas como Lanterna para dibujar en consola
 * **Bridge**: habilidad de cada enemigo que usa para atacar
