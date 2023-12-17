@@ -1,4 +1,4 @@
-#único proyecto con todos los patrones de diseño en java
+# Único proyecto con todos los patrones de diseño en java
 
 driver que su implementación la conducimos nosotros
 
