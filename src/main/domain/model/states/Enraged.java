@@ -1,4 +1,4 @@
-package main.domain.model.status;
+package main.domain.model.states;
 
 import main.domain.model.Enemy;
 import main.domain.model.Status;

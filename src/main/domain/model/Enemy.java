@@ -1,6 +1,6 @@
 package main.domain.model;
 
-import main.domain.model.status.Asleep;
+import main.domain.model.states.Asleep;
 
 public abstract class Enemy implements Protective {
 	protected int life;

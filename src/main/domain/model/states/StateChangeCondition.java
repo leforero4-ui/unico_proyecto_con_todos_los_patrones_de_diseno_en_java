@@ -1,4 +1,4 @@
-package main.domain.model.status;
+package main.domain.model.states;
 
 public abstract class StateChangeCondition {
 	protected int timesAttacked = 0;
