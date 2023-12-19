@@ -36,7 +36,7 @@ comportamiento
 * **Iterator**: recorrer el tablero del juego para dibujar los enemigos
 * **Strategy**: estrategía(habilidad) para calcular el nivel de ataque de cada enemigo
 * **Mediator**: interface que controla los ataques y los contraataques entre el jugador y los enemigos, en este caso GameableUseCase.java
-* **Observer**: para que los protectores del enemigo supremo reciban un porcentaje del ataque
+* **Observer**: para que los protectores(Subscribers) del enemigo supremo(Publisher) reciban un porcentaje del ataque cuando es atacado(subscribe)
 * **Visitor**: debido a que los enemigos y el jugador no deberían poder recuperarse se saca la funcionalidad aparte para que no afecte las clases Soldier, Squadron, Supreme y Player
 * **Interpreter**: para buscar enemigos por tipos en el tablero  
 expresión ::= enemigo | conjución | alternativa | '('expresión')'  

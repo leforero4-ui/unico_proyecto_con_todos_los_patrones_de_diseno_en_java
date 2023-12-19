@@ -68,12 +68,12 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void startGame() {
 		this.gameableUseCase.startGame();
-		String squares;
 		
 		String locationEnemy;
 		do {
-			squares = this.gameableUseCase.getStringAvatarSquares() + "\r\n";
-			locationEnemy = this.drawable.in(squares + "elija fila y columna separado por guión(-) para atacar;\r\nescriba 'buscar:' seguido de los tipos de enemigos a buscar, ejemplo soldado y escuadron y (aire o naval)\r\n(99-99 para terminar juego)");
+			this.gameableUseCase.removeDeadEnemies();
+			
+			locationEnemy = this.drawable.in(this.gameableUseCase.getStringAvatarSquares() + "\r\nelija fila y columna separado por guión(-) para atacar;\r\nescriba 'buscar:' seguido de los tipos de enemigos a buscar, ejemplo soldado y escuadron y (aire o naval)\r\n(99-99 para terminar juego)");
 			if (locationEnemy != null && locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
 				final String[] locationEnemySplit = locationEnemy.split("-");
 				final int row = Integer.parseInt(locationEnemySplit[0]);

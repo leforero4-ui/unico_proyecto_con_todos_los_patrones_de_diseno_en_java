@@ -2,7 +2,7 @@ package main.domain.model;
 
 import main.domain.model.status.Asleep;
 
-public abstract class Enemy {
+public abstract class Enemy implements Protective {
 	protected int life;
 	protected int attackLevel;
 	protected final Skillfull skill;
@@ -31,6 +31,14 @@ public abstract class Enemy {
 		this.status = status;
 	}
 	
+	@Override
+	public void protect(final Supreme theProtected) {
+		this.receiveAttack(1);
+		if (this.getLife() <= 0) {
+			theProtected.removeProtector(this);
+		}
+	}
+
 	public abstract void receiveAttack(final int attack);
 	
 	public abstract String getAvatar(final String prefix);

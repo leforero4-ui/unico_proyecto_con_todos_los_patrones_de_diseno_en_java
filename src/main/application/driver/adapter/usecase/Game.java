@@ -61,7 +61,7 @@ public class Game implements GameableUseCase {
 	}
 
 	@Override
-	public String getStringAvatarSquares() {
+	public String getStringAvatarSquares() {		
 		final StringBuilder squares = new StringBuilder();
 		while (this.enemyIterator.hasNext()) {
             squares.append(this.enemyIterator.getAvatarSquareNext());
@@ -74,6 +74,17 @@ public class Game implements GameableUseCase {
         		+ "enemigos: " + squares.toString() + "\r\n"
                 + "\r\n"
         		+ "jugador: {X-X:" + this.player.getAvatar() + ":" + this.player.getLife() + ":" + this.player.getAttackLevel() + "}\r\n";
+	}
+
+	@Override
+	public void removeDeadEnemies() {
+		while (this.enemyIterator.hasNext()) {
+			final Enemy enemy = this.enemyIterator.getNext();
+			if (enemy.getLife() <= 0) {
+	            this.enemyIterator.remove();
+			}
+        }
+		this.enemyIterator.reset();
 	}
 
 	private void counterAttack(final int attackLevelReceived, final Enemy enemy) {
@@ -90,15 +101,6 @@ public class Game implements GameableUseCase {
 		this.player.acceptVisit(heleable);
 	}
 
-	private List<String> getAvatarSquares() {
-		final List<String> avatarSquares = new ArrayList<>();
-		while (this.enemyIterator.hasNext()) {
-			avatarSquares.add(this.enemyIterator.getAvatarSquareNext());
-        }
-		this.enemyIterator.reset();
-		return avatarSquares;
-	}
-
 	@Override
 	public String getEnemies(final String stringExpression) {
 		final Expression expression = this.parseExpression(this.prepareStringExpression(stringExpression));
@@ -107,6 +109,15 @@ public class Game implements GameableUseCase {
 		List<String> avatarSquares = expression.interpret(context);
 		avatarSquares.forEach(avatarSquare -> avatarSquaresStringBuilder.append(avatarSquare + "\r\n"));
 		return avatarSquaresStringBuilder.toString();
+	}
+
+	private List<String> getAvatarSquares() {
+		final List<String> avatarSquares = new ArrayList<>();
+		while (this.enemyIterator.hasNext()) {
+			avatarSquares.add(this.enemyIterator.getAvatarSquareNext());
+        }
+		this.enemyIterator.reset();
+		return avatarSquares;
 	}
 	
 	private String prepareStringExpression(String stringExpression) {

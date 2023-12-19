@@ -2,15 +2,14 @@ package main.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Supreme extends Enemy {
 	
-	private final List<Enemy> protectors;
+	private final List<Protective> protectors;
 	
 	protected Supreme(int life, int attackLevel, Skillfull skill) {
 		super(life, attackLevel, skill);
-		this.protectors = new ArrayList<Enemy>();
+		this.protectors = new ArrayList<>();
 	}
 
 	@Override
@@ -23,24 +22,21 @@ public abstract class Supreme extends Enemy {
 		this.life -= this.notifyAttackToProtectors(attack);
 	}
 	
-	public void addProtector(Enemy enemy) {
-		this.protectors.add(enemy);
+	public void addProtector(Protective protective) {
+		this.protectors.add(protective);
+	}
+	
+	public void removeProtector(Protective protective) {
+		this.protectors.remove(protective);
 	}
 	
 	private int notifyAttackToProtectors(int attack) {
-		final List<Enemy> enemyDeletes = new ArrayList<>();
-		final AtomicInteger remnantAttack = new AtomicInteger(attack);
-		protectors.forEach(enemy -> {
-			if (enemy.getLife() > 0) {
-				enemy.receiveAttack(1);
-				remnantAttack.set(remnantAttack.get() - 1);
-			}
-			if (enemy.getLife() <= 0) {
-				enemyDeletes.add(enemy);
-			}
+		final List<Protective> protectorsTemp = new ArrayList<>(this.protectors);
+		protectorsTemp.forEach(protective -> {
+			protective.protect(this);
 		});
-		protectors.removeAll(enemyDeletes);
-		return remnantAttack.get();
+		
+		return protectorsTemp.size();
 	}
 
 }
