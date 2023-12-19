@@ -85,8 +85,14 @@ public class ControllerImpl implements Controller {
 						this.drawable.out(this.gameableUseCase.getStringAvatarSquares() + "\r\nSe ha sanado\r\ncontinuara el ataque");
 					}
 				}
-				final boolean counterattacked = this.gameableUseCase.attackAndCounterAttack(row, column);
-				this.drawable.out(counterattacked ? "Se ha lanzado contraataque\r\n" : "Enemigo eliminado\r\n");
+				
+				final Boolean[] isSuccessfulAttackAndIsEnemyEliminated = this.gameableUseCase.attackAndCounterAttack(row, column);
+				
+				final boolean isSuccessfulAttack = isSuccessfulAttackAndIsEnemyEliminated[0];
+				this.drawable.out(isSuccessfulAttack ? "Enemigo ha recibido ataque\r\n" : "Enemigo ha esquivado ataque\r\n");
+				
+				final boolean isEnemyEliminated = isSuccessfulAttackAndIsEnemyEliminated[1];
+				this.drawable.out(isEnemyEliminated ? "Enemigo eliminado\r\n" : "Se ha lanzado contraataque\r\n");
 			} else if (locationEnemy != null && locationEnemy.startsWith("buscar:")) {
 				this.drawable.out(this.gameableUseCase.getEnemies(locationEnemy));
 			}

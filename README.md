@@ -44,3 +44,4 @@ enemigo ::= 'soldado' | 'escuadron' | 'supremo' | 'fortaleza'
 conjución ::= enemigo '&' enemigo  
 alternativa ::= enemigo '|' enemigo
 * **State**: estado del enemigo para calcular el contraataque: dormido, confundido, o enfurecido
+* **Chain of responsability**: para determinar la precisión al asertar un disparo al enemigo, esto depende de los ambientes que se carguen al juego, pueden ser combinados como frio y calor con lluvia

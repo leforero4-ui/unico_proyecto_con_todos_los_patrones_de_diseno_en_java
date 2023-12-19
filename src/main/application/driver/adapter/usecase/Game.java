@@ -14,6 +14,7 @@ import main.application.driver.port.usecase.GameableUseCase;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
 import main.domain.model.Enemy;
+import main.domain.model.FavorableEnvironment;
 import main.domain.model.Healable;
 import main.domain.model.Player;
 import main.domain.model.Visitor;
@@ -23,6 +24,7 @@ public class Game implements GameableUseCase {
 	private final Player player;
 	private BoardCollection<Enemy> board;
 	private PatternsIterator<Enemy> enemyIterator;
+	private FavorableEnvironment favorableEnvironments;
 	
 	public Game(final EnemyMethod enemyMethod, final Player player) {
 		this.enemyMethod = enemyMethod;
@@ -31,23 +33,27 @@ public class Game implements GameableUseCase {
 
 	@Override
 	public void startGame() {
-		final List<Enemy> enemies = enemyMethod.createEnemies();
+		final List<Enemy> enemies = this.enemyMethod.createEnemies();
 		this.board = new BigBoard(enemies);
-		this.enemyIterator = board.getIterator();
+		this.enemyIterator = this.board.getIterator();
+		this.favorableEnvironments = this.enemyMethod.createFavorableEnvironments();
 	}
 
 	@Override
-	public boolean attackAndCounterAttack(final int row, final int column) {
+	public Boolean[] attackAndCounterAttack(final int row, final int column) {
 		final Enemy enemy = board.getEnemy(row, column);
 		final int playerAttackLevel = this.player.getAttackLevel();
-		enemy.receiveAttack(playerAttackLevel);
-		if (enemy.getLife() <= 0) {
+		final boolean isSuccessfulAttack = this.favorableEnvironments.canAttack(enemy);
+		if (isSuccessfulAttack) {
+			enemy.receiveAttack(playerAttackLevel);
+		}
+		final boolean isEnemyEliminated = enemy.getLife() <= 0;
+		if (isEnemyEliminated) {
 			this.deleteEnemy(enemy);
-			return false;
 		} else {
 			this.counterAttack(playerAttackLevel, enemy);
-			return true;
 		}
+		return new Boolean[] {isSuccessfulAttack, isEnemyEliminated};
 	}
 	
 	private void deleteEnemy(final Enemy enemy) {
