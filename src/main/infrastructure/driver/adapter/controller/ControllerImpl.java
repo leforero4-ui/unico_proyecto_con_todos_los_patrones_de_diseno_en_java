@@ -127,8 +127,8 @@ public class ControllerImpl implements Controller {
 					final boolean isEnemyEliminated = isSuccessfulAttackAndIsEnemyEliminated[1];
 					this.drawable.out(isEnemyEliminated ? "Enemigo eliminado\r\n" : "Se ha lanzado contraataque\r\n");
 				} else if (inputString.startsWith("backup:")) {
-					final String textSuccessfulBackup = this.gameableUseCase.doOrRestoreBackup(inputString) ? "\r\nBackup satisfactorio" : "\r\nBackup fallido";
-					this.drawable.out(this.gameableUseCase.getStringAvatarPlayer() + textSuccessfulBackup);
+					final String textSuccessfulBackup = this.gameableUseCase.doOrRestoreBackup(inputString) ? "satisfactorio" : "fallido";
+					this.drawable.out(this.gameableUseCase.getStringAvatarPlayer() + "\r\nBackup " + textSuccessfulBackup);
 				} else if (inputString.startsWith("buscar:")) {
 					this.drawable.out(this.gameableUseCase.getEnemies(inputString));
 				}
