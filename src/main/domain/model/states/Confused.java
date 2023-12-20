@@ -13,7 +13,7 @@ public class Confused extends StateChangeCondition implements Status {
 		} else if (this.down(attackLevelReceived)) {
 			enemy.setStatus(new Asleep());
 		}
-		return enemy.getAttackLevel() / 2;
+		return enemy.getAttackLevel(true) / 2;
 	}
 
 }

@@ -1,5 +1,7 @@
 package main.domain.model;
 
+import main.domain.model.skill.Bang;
+
 public class SupremeNaval extends Supreme {
 	
 	private static SupremeNaval instance;

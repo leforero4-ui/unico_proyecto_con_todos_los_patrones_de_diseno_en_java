@@ -11,7 +11,7 @@ public class Enraged extends StateChangeCondition implements Status {
 		if (this.down(attackLevelReceived)) {
 			enemy.setStatus(new Enraged());
 		}
-		return enemy.getAttackLevel();
+		return enemy.getAttackLevel(true);
 	}
 
 }

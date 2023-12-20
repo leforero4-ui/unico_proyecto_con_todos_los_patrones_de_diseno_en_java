@@ -1,4 +1,6 @@
-package main.domain.model;
+package main.domain.model.skill;
+
+import main.domain.model.Skillfull;
 
 public class Bang implements Skillfull {
 	private int remainingUsage;
@@ -8,9 +10,11 @@ public class Bang implements Skillfull {
 	}
 
 	@Override
-	public int getEnhancedAttackLevel(int attackLevel) {
+	public int getEnhancedAttackLevel(int attackLevel, boolean isAttacking) {
 		if (this.remainingUsage > 0) {
-			--this.remainingUsage;
+			if (isAttacking) {
+				--this.remainingUsage;
+			}
 			attackLevel *= 2;
 		}
 		return attackLevel;

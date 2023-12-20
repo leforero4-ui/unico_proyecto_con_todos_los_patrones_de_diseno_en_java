@@ -1,5 +1,7 @@
 package main.domain.model;
 
+import main.domain.model.skill.MultipleShots;
+
 public class SupremeAir extends Supreme {
 	
 	private static SupremeAir instance;

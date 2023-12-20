@@ -84,7 +84,7 @@ public class BigBoard implements BoardCollection<Enemy> {
 			avatarSquare.append(":");
 			avatarSquare.append(enemy.getLife());
 			avatarSquare.append(":");
-			avatarSquare.append(enemy.getAttackLevel());
+			avatarSquare.append(enemy.getAttackLevel(false));
 			avatarSquare.append("}");
 			if (column == COLUMNS - 1) {
 				avatarSquare.append("\n");

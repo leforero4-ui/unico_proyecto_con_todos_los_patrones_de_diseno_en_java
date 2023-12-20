@@ -5,12 +5,9 @@ import java.util.List;
 
 import main.application.driver.port.usecase.EnemyMethod;
 import main.domain.model.ArmyFactory;
-import main.domain.model.Bang;
 import main.domain.model.Enemy;
 import main.domain.model.FavorableEnvironment;
 import main.domain.model.Fort;
-import main.domain.model.MultipleShots;
-import main.domain.model.Poison;
 import main.domain.model.Soldier;
 import main.domain.model.Supreme;
 import main.domain.model.environment.City;
@@ -18,6 +15,9 @@ import main.domain.model.environment.Cold;
 import main.domain.model.environment.Heat;
 import main.domain.model.environment.Jungle;
 import main.domain.model.environment.Rainy;
+import main.domain.model.skill.Bang;
+import main.domain.model.skill.MultipleShots;
+import main.domain.model.skill.Poison;
 
 public class EnemyHighMethod implements EnemyMethod {
 	private final ArmyFactory armyFactory;

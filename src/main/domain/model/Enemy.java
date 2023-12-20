@@ -19,8 +19,8 @@ public abstract class Enemy implements Protective {
 		return this.life;
 	}
 	
-	public int getAttackLevel() {
-		return this.skill.getEnhancedAttackLevel(this.attackLevel);
+	public int getAttackLevel(boolean isAttacking) {
+		return this.skill.getEnhancedAttackLevel(this.attackLevel, isAttacking);
 	}
 	
 	public int getCounterAttackLevel(final int attackLevelReceived) {

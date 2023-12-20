@@ -3,7 +3,6 @@ package main.application.driver.adapter.usecase.board;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
 import main.domain.model.Enemy;
-import main.domain.model.Visitor;
 
 public class BoardIterator implements PatternsIterator<Enemy> {
     private final BoardCollection<Enemy> boardCollection;
@@ -68,14 +67,6 @@ public class BoardIterator implements PatternsIterator<Enemy> {
 	public void reset() {
         this.row = 0;
         this.column = -1;
-	}
-
-
-	@Override
-	public void visit(final Visitor visitor) {
-		this.updateRowAndColumnToNext();
-		final Enemy enemy = this.boardCollection.getEnemy(row, column);
-		enemy.acceptVisit(visitor);
 	}
 	
 	private void updateRowAndColumnToNext() {

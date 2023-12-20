@@ -30,12 +30,12 @@ public abstract class Squadron extends Enemy {
 	}
 
 	@Override
-	public int getAttackLevel() {
+	public int getAttackLevel(boolean isAttacking) {
 		this.attackLevel = 0;
 		for (Enemy enemy : this.squadronList) {
-			this.attackLevel += enemy.getAttackLevel();
+			this.attackLevel += enemy.getAttackLevel(isAttacking);
 		}
-		return super.getAttackLevel();
+		return super.getAttackLevel(isAttacking);
 	}
 
 	@Override

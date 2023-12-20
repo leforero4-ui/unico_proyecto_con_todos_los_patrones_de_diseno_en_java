@@ -1,4 +1,6 @@
-package main.domain.model;
+package main.domain.model.skill;
+
+import main.domain.model.Skillfull;
 
 public class MultipleShots implements Skillfull {
 	private int numberOfSimultaneousShots;
@@ -8,7 +10,7 @@ public class MultipleShots implements Skillfull {
 	}
 
 	@Override
-	public int getEnhancedAttackLevel(int attackLevel) {
+	public int getEnhancedAttackLevel(int attackLevel, boolean isAttacking) {
 		return attackLevel + numberOfSimultaneousShots;
 	}
 

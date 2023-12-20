@@ -8,11 +8,11 @@ import main.application.driver.adapter.usecase.factory_enemies.EnemyMiddleMethod
 import main.application.driver.port.controller.Controller;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.GameableUseCase;
-import main.domain.model.ArmyAirFactory;
 import main.domain.model.ArmyFactory;
-import main.domain.model.ArmyNavalFactory;
 import main.domain.model.Player;
 import main.domain.model.PlayerBuilder;
+import main.domain.model.factory.ArmyAirFactory;
+import main.domain.model.factory.ArmyNavalFactory;
 import main.infrastructure.driven.adapter.provider.LanternaDrawable;
 
 public class ControllerImpl implements Controller {
@@ -74,27 +74,53 @@ public class ControllerImpl implements Controller {
 			this.gameableUseCase.removeDeadEnemies();
 			
 			locationEnemy = this.drawable.in(this.gameableUseCase.getStringAvatarSquares() + "\r\nelija fila y columna separado por guión(-) para atacar;\r\nescriba 'buscar:' seguido de los tipos de enemigos a buscar, ejemplo soldado y escuadron y (aire o naval)\r\n(99-99 para terminar juego)");
-			if (locationEnemy != null && locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
-				final String[] locationEnemySplit = locationEnemy.split("-");
-				final int row = Integer.parseInt(locationEnemySplit[0]);
-				final int column = Integer.parseInt(locationEnemySplit[1]);
-				if (locationEnemySplit.length > 2) {
-					final String secretCode = locationEnemy.split("-")[2];
-					if (secretCode.equalsIgnoreCase("recuperación") ) {
-						this.gameableUseCase.healing();
-						this.drawable.out(this.gameableUseCase.getStringAvatarSquares() + "\r\nSe ha sanado\r\ncontinuara el ataque");
+			if (locationEnemy != null) {
+				if (locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
+					boolean isFrozen = this.gameableUseCase.isFrozen();
+					if (isFrozen) {
+						this.gameableUseCase.plusTurnFrozen();
+						isFrozen = this.gameableUseCase.isFrozen();
+					} else {
+						this.gameableUseCase.calculateFreezing();
+						isFrozen = this.gameableUseCase.isFrozen();
+						if (isFrozen) {
+							this.drawable.out("Ha pisado una mina congeladora, sus ataque y sanaciones no se reflejaran hasta dentro de 5 turnos\r\n");	
+						}
 					}
+					
+					final String[] locationEnemySplit = locationEnemy.split("-");
+					final int row = Integer.parseInt(locationEnemySplit[0]);
+					final int column = Integer.parseInt(locationEnemySplit[1]);
+					boolean withCombo = false;
+					if (locationEnemySplit.length > 2) {
+						final String secretCode = locationEnemy.split("-")[2];
+						if (secretCode.equalsIgnoreCase("recuperación")) {
+							this.gameableUseCase.healing();
+							this.drawable.out(this.gameableUseCase.getStringAvatarSquares() + "\r\nSe ha sanado\r\ncontinuara el ataque");
+						} else if (secretCode.equalsIgnoreCase("combo")) {
+							withCombo = true;
+						}
+					}
+					
+					final Boolean[] isSuccessfulAttackAndIsEnemyEliminated;
+					if (withCombo) {
+						isSuccessfulAttackAndIsEnemyEliminated = this.gameableUseCase.attackWithComboAndCounterAttack(row, column);
+					} else {
+						isSuccessfulAttackAndIsEnemyEliminated = this.gameableUseCase.attackAndCounterAttack(row, column);
+					}
+					
+					if (isFrozen) {
+						this.drawable.out("Estas congelado por " + this.gameableUseCase.getTurnsForDefrost() + " turnos\r\n");
+					} else {
+						final boolean isSuccessfulAttack = isSuccessfulAttackAndIsEnemyEliminated[0];
+						this.drawable.out(isSuccessfulAttack ? "Enemigo ha recibido el ataque\r\n" : "Enemigo ha esquivado el ataque\r\n");
+					}
+					
+					final boolean isEnemyEliminated = isSuccessfulAttackAndIsEnemyEliminated[1];
+					this.drawable.out(isEnemyEliminated ? "Enemigo eliminado\r\n" : "Se ha lanzado contraataque\r\n");
+				} else if (locationEnemy.startsWith("buscar:")) {
+					this.drawable.out(this.gameableUseCase.getEnemies(locationEnemy));
 				}
-				
-				final Boolean[] isSuccessfulAttackAndIsEnemyEliminated = this.gameableUseCase.attackAndCounterAttack(row, column);
-				
-				final boolean isSuccessfulAttack = isSuccessfulAttackAndIsEnemyEliminated[0];
-				this.drawable.out(isSuccessfulAttack ? "Enemigo ha recibido ataque\r\n" : "Enemigo ha esquivado ataque\r\n");
-				
-				final boolean isEnemyEliminated = isSuccessfulAttackAndIsEnemyEliminated[1];
-				this.drawable.out(isEnemyEliminated ? "Enemigo eliminado\r\n" : "Se ha lanzado contraataque\r\n");
-			} else if (locationEnemy != null && locationEnemy.startsWith("buscar:")) {
-				this.drawable.out(this.gameableUseCase.getEnemies(locationEnemy));
 			}
 		} while (locationEnemy != null && !locationEnemy.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
 		

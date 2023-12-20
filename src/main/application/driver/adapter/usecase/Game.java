@@ -13,10 +13,13 @@ import main.application.driver.port.usecase.Expression;
 import main.application.driver.port.usecase.GameableUseCase;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
+import main.domain.model.Command;
 import main.domain.model.Enemy;
 import main.domain.model.FavorableEnvironment;
 import main.domain.model.Healable;
 import main.domain.model.Player;
+import main.domain.model.command.Attack;
+import main.domain.model.command.HealingPlayer;
 import main.domain.model.Visitor;
 
 public class Game implements GameableUseCase {
@@ -25,10 +28,12 @@ public class Game implements GameableUseCase {
 	private BoardCollection<Enemy> board;
 	private PatternsIterator<Enemy> enemyIterator;
 	private FavorableEnvironment favorableEnvironments;
+	private final Frostbite frostbite;
 	
 	public Game(final EnemyMethod enemyMethod, final Player player) {
 		this.enemyMethod = enemyMethod;
 		this.player = player;
+		this.frostbite = new Frostbite();
 	}
 
 	@Override
@@ -42,18 +47,81 @@ public class Game implements GameableUseCase {
 	@Override
 	public Boolean[] attackAndCounterAttack(final int row, final int column) {
 		final Enemy enemy = board.getEnemy(row, column);
-		final int playerAttackLevel = this.player.getAttackLevel();
-		final boolean isSuccessfulAttack = this.favorableEnvironments.canAttack(enemy);
-		if (isSuccessfulAttack) {
-			enemy.receiveAttack(playerAttackLevel);
-		}
+		return new Boolean[] {this.attack(enemy), this.eliminedEnemyFallBackCounterAttack(enemy)};
+	}
+
+	@Override
+	public Boolean[] attackWithComboAndCounterAttack(final int row, final int column) {
+		final Enemy enemy = board.getEnemy(row, column);
+		return new Boolean[] {this.combo(enemy), this.eliminedEnemyFallBackCounterAttack(enemy)};
+	}
+	
+	private boolean eliminedEnemyFallBackCounterAttack(final Enemy enemy) {
 		final boolean isEnemyEliminated = enemy.getLife() <= 0;
 		if (isEnemyEliminated) {
 			this.deleteEnemy(enemy);
 		} else {
-			this.counterAttack(playerAttackLevel, enemy);
+			this.counterAttack(enemy);
 		}
-		return new Boolean[] {isSuccessfulAttack, isEnemyEliminated};
+		
+		return isEnemyEliminated;
+	}
+	
+	private void counterAttack(final Enemy enemy) {
+		this.player.receiveAttack(enemy.getCounterAttackLevel(this.player.getAttackLevel()));
+	}
+
+	private boolean combo(final Enemy enemy) {
+		final int lifeBeforeAttack = enemy.getLife();
+		
+		final List<Command> comboCommands = new ArrayList<>();
+		
+		comboCommands.add(new Attack(this.favorableEnvironments, this.player, enemy));
+		comboCommands.add(new HealingPlayer(this.player));
+		comboCommands.add(new Attack(this.favorableEnvironments, this.player, enemy));
+		comboCommands.add(new HealingPlayer(this.player));
+		comboCommands.add(new Attack(this.favorableEnvironments, this.player, enemy));
+		
+		if (this.frostbite.isFrozen()) {
+			this.frostbite.addCommands(comboCommands);
+			return false;
+		}
+
+		comboCommands.forEach(Command::execute);
+		return lifeBeforeAttack != enemy.getLife();
+	}
+	
+	private boolean attack(final Enemy enemy) {
+		final int lifeBeforeAttack = enemy.getLife();
+		
+		final Command attackCommand = new Attack(this.favorableEnvironments, this.player, enemy);
+		if (this.frostbite.isFrozen()) {
+			this.frostbite.addCommand(attackCommand);
+			return false;
+		}
+
+		attackCommand.execute();
+		return lifeBeforeAttack != enemy.getLife();
+	}
+
+	@Override
+	public void calculateFreezing() {
+		this.frostbite.calculateFreezing();
+	}
+	
+	@Override
+	public boolean isFrozen() {
+		return this.frostbite.isFrozen();
+	}
+
+	@Override
+	public int getTurnsForDefrost() {
+		return this.frostbite.getTurnsForDefrost();
+	}
+
+	@Override
+	public void plusTurnFrozen() {
+		this.frostbite.plusTurnFrozen();
 	}
 	
 	private void deleteEnemy(final Enemy enemy) {
@@ -73,6 +141,7 @@ public class Game implements GameableUseCase {
             squares.append(this.enemyIterator.getAvatarSquareNext());
         }
 		this.enemyIterator.reset();
+		
         return "B=bomba,M=multiples disparos,F=fortaleza,V=veneno,A=aire,N=naval,S=soldado,E=escuadrón,M=maestro\r\n"
         		+ "\r\n"
         		+ "tablero:{fila-columna:avatar:vida:ataque}\r\n"
@@ -93,18 +162,22 @@ public class Game implements GameableUseCase {
 		this.enemyIterator.reset();
 	}
 
-	private void counterAttack(final int attackLevelReceived, final Enemy enemy) {
-		this.player.receiveAttack(enemy.getCounterAttackLevel(attackLevelReceived));
-	}
-
 	@Override
 	public void healing() {
-		final Visitor heleable = new Healable();
+		final Visitor healable = new Healable();
+		
 		while (this.enemyIterator.hasNext()) {
-			this.enemyIterator.visit(heleable);
+			final Enemy enemy = this.enemyIterator.getNext();
+			enemy.acceptVisit(healable);
         }
 		this.enemyIterator.reset();
-		this.player.acceptVisit(heleable);
+		
+		final Command healingCommand = new HealingPlayer(this.player);
+		if (this.frostbite.isFrozen()) {
+			this.frostbite.addCommand(healingCommand);
+		} else {
+			healingCommand.execute();
+		}
 	}
 
 	@Override
