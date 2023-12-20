@@ -9,6 +9,8 @@ public class HealingPlayer implements Command {
 	private final Player player;
 	private final Visitor healable;
 
+	//sus propiedades deben ser inmutables ya que se podría ejecutar en cualquier momento y no deben haber cambiado
+	//por lo tanto tener cuidado con los objetos pasados por parámetros y sus propiedades que no cambien hasta ser ejecutado el comando
 	public HealingPlayer(Player player) {
 		this.player = player;
 		this.healable = new Healable();

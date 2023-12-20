@@ -76,11 +76,11 @@ public class Game implements GameableUseCase {
 		
 		final List<Command> comboCommands = new ArrayList<>();
 		
-		comboCommands.add(new Attack(this.favorableEnvironments, this.player, enemy));
+		comboCommands.add(new Attack(this.favorableEnvironments, this.player.getAttackLevel(), enemy));
 		comboCommands.add(new HealingPlayer(this.player));
-		comboCommands.add(new Attack(this.favorableEnvironments, this.player, enemy));
+		comboCommands.add(new Attack(this.favorableEnvironments, this.player.getAttackLevel(), enemy));
 		comboCommands.add(new HealingPlayer(this.player));
-		comboCommands.add(new Attack(this.favorableEnvironments, this.player, enemy));
+		comboCommands.add(new Attack(this.favorableEnvironments, this.player.getAttackLevel(), enemy));
 		
 		if (this.frostbite.isFrozen()) {
 			this.frostbite.addCommands(comboCommands);
@@ -94,7 +94,7 @@ public class Game implements GameableUseCase {
 	private boolean attack(final Enemy enemy) {
 		final int lifeBeforeAttack = enemy.getLife();
 		
-		final Command attackCommand = new Attack(this.favorableEnvironments, this.player, enemy);
+		final Command attackCommand = new Attack(this.favorableEnvironments, this.player.getAttackLevel(), enemy);
 		if (this.frostbite.isFrozen()) {
 			this.frostbite.addCommand(attackCommand);
 			return false;
