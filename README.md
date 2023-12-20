@@ -29,7 +29,8 @@ comportamientos
 * **Strategy**: estrategía(habilidad) para calcular el nivel de ataque de cada enemigo
 * **Mediator**: interface que controla los ataques y los contraataques entre el jugador y los enemigos, en este caso GameableUseCase.java
 * **Observer**: para que los protectores(Subscribers) del enemigo supremo(Publisher) reciban un porcentaje del ataque cuando es atacado(subscribe), esto es programación reactiva
-* **Visitor**: debido a que los enemigos y el jugador no deberían poder recuperarse se saca la funcionalidad aparte para que no afecte las clases Soldier, Squadron, Supreme y Player
+* **Visitor**: debido a que los enemigos y el jugador no deberían poder recuperarse se saca la funcionalidad aparte para que no esté en las clases Soldier, Squadron, Supreme y Player, ya que no debería estar allí y además se deja abierto a extender otras funcionalidades que no deban estar en esas clases como por ejemplo el exportar a pdf, xml, o csv,  
+en este caso se puso a la clase visitante y las clases visitadas en el mismo paquete para que pudiera tener acceso a los campos protegidos lo que es una desventaja del patrón
 * **Interpreter**: para buscar enemigos por tipos en el tablero  
 expresión ::= enemigo | conjución | alternativa | '('expresión')'  
 enemigo ::= 'soldado' | 'escuadron' | 'supremo' | 'fortaleza'  
