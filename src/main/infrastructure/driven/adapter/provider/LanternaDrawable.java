@@ -24,6 +24,7 @@ public class LanternaDrawable implements Drawable {
 			final Terminal terminal = terminalFactory.createTerminal();
 			this.screen = new TerminalScreen(terminal);
 			this.textGUI = new MultiWindowTextGUI(this.screen);
+        	this.screen.startScreen();
 		} catch (IOException e) {
             System.out.println(e.getMessage());
 		}
@@ -31,36 +32,25 @@ public class LanternaDrawable implements Drawable {
 
 	@Override
 	public String in(String text) {
-		try {
-			text = this.addLineBreaks(text);
-        	this.screen.startScreen();
-        	
-        	return new TextInputDialogBuilder()
-    		.setTitle("Juego:")
-    		.setDescription(text)
-    		//.setValidationPattern(Pattern.compile("[0-9]"), "You didn't enter a single number!")
-    		.build()
-    		.showDialog(this.textGUI);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-		return null;
+		text = this.addLineBreaks(text);
+    
+    	return new TextInputDialogBuilder()
+		.setTitle("Juego:")
+		.setDescription(text)
+		//.setValidationPattern(Pattern.compile("[0-9]"), "You didn't enter a single number!")
+		.build()
+		.showDialog(this.textGUI);
 	}
 
 	@Override
 	public void out(String text) {
-		try {
-			text = this.addLineBreaks(text);
-			this.screen.startScreen();
-			
-			new MessageDialogBuilder()
-			.setTitle("Juego:")
-			.setText(text)
-			.build()
-			.showDialog(this.textGUI);
-		} catch (IOException e) {
-            System.out.println(e.getMessage());
-		}
+		text = this.addLineBreaks(text);
+		
+		new MessageDialogBuilder()
+		.setTitle("Juego:")
+		.setText(text)
+		.build()
+		.showDialog(this.textGUI);
 	}
 	
     private String addLineBreaks(String input) {

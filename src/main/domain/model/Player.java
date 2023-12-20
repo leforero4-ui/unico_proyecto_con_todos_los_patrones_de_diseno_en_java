@@ -43,4 +43,25 @@ public abstract class Player {
 	public void receiveAttack(final int attack) {
 		this.life -= attack;
 	}
+	
+	public MementoPlayer doBackup() {
+		return new MementoPlayer(this);
+	}
+	
+	public void restoreMemento(final MementoPlayer memento) {
+		this.life = memento.life;
+		this.attackLevel = memento.attackLevel;
+	}
+	
+	public class MementoPlayer { //anidada para obtener todas las propiedades mutables sin problemas de visibilidad
+		private final int life;
+		private final int attackLevel;
+		
+		//las propiedades del memento deben ser inmutables y son las propiedades mutables de la clase originadora(en este caso la clase Player)
+		public MementoPlayer(Player player) {
+			this.life = player.life;
+			this.attackLevel = player.attackLevel;
+		}
+		
+	}
 }

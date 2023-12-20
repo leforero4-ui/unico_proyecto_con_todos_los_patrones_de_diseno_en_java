@@ -9,7 +9,9 @@ public interface GameableUseCase {
 	int getTurnsForDefrost();
 	void plusTurnFrozen();
 	String getStringAvatarSquares();
+	String getStringAvatarPlayer();
 	void removeDeadEnemies();
 	String getEnemies(String stringExpression);
 	void healing();
+	boolean doOrRestoreBackup(String inputString);
 }

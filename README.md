@@ -40,6 +40,7 @@ alternativa ::= enemigo '|' enemigo
 * **Chain of responsability**: para determinar la precisión al asertar un disparo al enemigo, esto depende de los ambientes que se carguen al juego, pueden ser combinados como frio y calor con lluvia
 * **Command**: los invocadores pueden ser un combo o un ataque/sanación directo, en la función execute se llama al receiver,  
 los comandos pueden ser invocados desde diferentes partes: en un combo y directamente al ejecutar el ataque o la sanación, también si caes en una mina de hielo tus ataques y sanaciones seran congelados 5 turnos y estaran estos comandos en una pila esperando a ser ejecutados después de los 5 turnos
+* **Memento**: hacer puntos de restauración
 
 
 notas:

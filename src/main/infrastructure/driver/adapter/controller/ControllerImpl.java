@@ -16,7 +16,6 @@ import main.domain.model.factory.ArmyNavalFactory;
 import main.infrastructure.driven.adapter.provider.LanternaDrawable;
 
 public class ControllerImpl implements Controller {
-
 	private GameableUseCase gameableUseCase;
 	private final ArmyFactory armyFactory;
 	private final Drawable drawable;
@@ -69,13 +68,22 @@ public class ControllerImpl implements Controller {
 	public void startGame() {
 		this.gameableUseCase.startGame();
 		
-		String locationEnemy;
+		String inputString;
 		do {
 			this.gameableUseCase.removeDeadEnemies();
 			
-			locationEnemy = this.drawable.in(this.gameableUseCase.getStringAvatarSquares() + "\r\nelija fila y columna separado por guión(-) para atacar;\r\nescriba 'buscar:' seguido de los tipos de enemigos a buscar, ejemplo soldado y escuadron y (aire o naval)\r\n(99-99 para terminar juego)");
-			if (locationEnemy != null) {
-				if (locationEnemy.contains("-") && !locationEnemy.equalsIgnoreCase("99-99")) {
+			inputString = this.drawable.in(this.gameableUseCase.getStringAvatarSquares() + "\r\n"
+					+ "elija fila y columna y escribalos separados por guión(-) para atacar\r\n"
+					+ "puede agregarle un guión(-) y un código como recuperación o combo\r\n"
+					+ "\r\n"
+					+ "escriba 'buscar:' seguido de los tipos de enemigos a buscar, ejemplo: buscar: soldado y escuadron y (aire o naval)\r\n"
+					+ "\r\n"
+					+ "escriba 'backup:' para realizar/restaurar copias de seguridad, ejemplo: backup: realizar punto1\r\n"
+					+ "y puede restaurar copias de seguridad, ejemplo: backup: restaurar punto1\r\n"
+					+ "\r\n"
+					+ "99-99 para terminar el juego");
+			if (inputString != null) {
+				if (inputString.contains("-") && !inputString.equalsIgnoreCase("99-99")) {
 					boolean isFrozen = this.gameableUseCase.isFrozen();
 					if (isFrozen) {
 						this.gameableUseCase.plusTurnFrozen();
@@ -88,12 +96,12 @@ public class ControllerImpl implements Controller {
 						}
 					}
 					
-					final String[] locationEnemySplit = locationEnemy.split("-");
+					final String[] locationEnemySplit = inputString.split("-");
 					final int row = Integer.parseInt(locationEnemySplit[0]);
 					final int column = Integer.parseInt(locationEnemySplit[1]);
 					boolean withCombo = false;
 					if (locationEnemySplit.length > 2) {
-						final String secretCode = locationEnemy.split("-")[2];
+						final String secretCode = inputString.split("-")[2];
 						if (secretCode.equalsIgnoreCase("recuperación")) {
 							this.gameableUseCase.healing();
 							this.drawable.out(this.gameableUseCase.getStringAvatarSquares() + "\r\nSe ha sanado\r\ncontinuara el ataque");
@@ -118,11 +126,14 @@ public class ControllerImpl implements Controller {
 					
 					final boolean isEnemyEliminated = isSuccessfulAttackAndIsEnemyEliminated[1];
 					this.drawable.out(isEnemyEliminated ? "Enemigo eliminado\r\n" : "Se ha lanzado contraataque\r\n");
-				} else if (locationEnemy.startsWith("buscar:")) {
-					this.drawable.out(this.gameableUseCase.getEnemies(locationEnemy));
+				} else if (inputString.startsWith("backup:")) {
+					final String textSuccessfulBackup = this.gameableUseCase.doOrRestoreBackup(inputString) ? "\r\nBackup satisfactorio" : "\r\nBackup fallido";
+					this.drawable.out(this.gameableUseCase.getStringAvatarPlayer() + textSuccessfulBackup);
+				} else if (inputString.startsWith("buscar:")) {
+					this.drawable.out(this.gameableUseCase.getEnemies(inputString));
 				}
 			}
-		} while (locationEnemy != null && !locationEnemy.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
+		} while (inputString != null && !inputString.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
 		
 		this.drawable.out("fin del juego");
 	}

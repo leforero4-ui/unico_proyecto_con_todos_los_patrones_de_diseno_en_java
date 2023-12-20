@@ -13,11 +13,13 @@ import main.application.driver.port.usecase.Expression;
 import main.application.driver.port.usecase.GameableUseCase;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
+import main.domain.model.CaretakerPlayer;
 import main.domain.model.Command;
 import main.domain.model.Enemy;
 import main.domain.model.FavorableEnvironment;
 import main.domain.model.Healable;
 import main.domain.model.Player;
+import main.domain.model.Player.MementoPlayer;
 import main.domain.model.command.Attack;
 import main.domain.model.command.HealingPlayer;
 import main.domain.model.Visitor;
@@ -29,11 +31,13 @@ public class Game implements GameableUseCase {
 	private PatternsIterator<Enemy> enemyIterator;
 	private FavorableEnvironment favorableEnvironments;
 	private final Frostbite frostbite;
+	private final CaretakerPlayer caretakerPlayer;
 	
 	public Game(final EnemyMethod enemyMethod, final Player player) {
 		this.enemyMethod = enemyMethod;
 		this.player = player;
 		this.frostbite = new Frostbite();
+		this.caretakerPlayer = new CaretakerPlayer();
 	}
 
 	@Override
@@ -152,6 +156,11 @@ public class Game implements GameableUseCase {
 	}
 
 	@Override
+	public String getStringAvatarPlayer() {
+		return "jugador: {X-X:" + this.player.getAvatar() + ":" + this.player.getLife() + ":" + this.player.getAttackLevel() + "}\r\n";
+	}
+
+	@Override
 	public void removeDeadEnemies() {
 		while (this.enemyIterator.hasNext()) {
 			final Enemy enemy = this.enemyIterator.getNext();
@@ -239,6 +248,37 @@ public class Game implements GameableUseCase {
         }
         default -> new ConjunctionExpression(new EnemyExpression(firstToken), this.parseExpression(secondToken));
         };
+	}
+
+	@Override
+	public boolean doOrRestoreBackup(String inputString) {
+		inputString = inputString.substring("backup:".length());
+		inputString = inputString.replaceAll("  ", " ");
+		inputString = inputString.trim();
+    	final String[] inputStringArray = inputString.split(" ");
+    	if (inputStringArray.length >= 2) {
+    		final String operation = inputStringArray[0];
+    		final String key = inputStringArray[1];
+    		
+    		return switch(operation.toLowerCase()) {
+	    		case "realizar" -> {
+	    			final MementoPlayer mementoPlayer = this.player.doBackup();
+	    			this.caretakerPlayer.addMementoPlayerByKey(key, mementoPlayer);
+	    			yield true;
+	    		}
+	    		case "restaurar" -> {
+	    			final MementoPlayer mementoPlayer = this.caretakerPlayer.getMementoPlayerByKey(key);
+	    			if (mementoPlayer != null) {
+		    			this.player.restoreMemento(mementoPlayer);
+		    			yield true;
+	    			}
+	    			yield false;
+	    		}
+	    		default -> false;
+    		};
+    	}
+    	
+    	return false;
 	}
 
 }
