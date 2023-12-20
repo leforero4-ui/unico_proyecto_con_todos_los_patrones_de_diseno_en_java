@@ -37,7 +37,7 @@ conjución ::= enemigo '&' enemigo
 alternativa ::= enemigo '|' enemigo
 * **State**: estado del enemigo para calcular el contraataque: dormido, confundido, o enfurecido
 * **Chain of responsability**: para determinar la precisión al asertar un disparo al enemigo, esto depende de los ambientes que se carguen al juego, pueden ser combinados como frio y calor con lluvia
-* **Command**: cada uno de los elementos en los combos predefinidos es un comando, en la función execute se llama al receiver, y es invocado en el combo o por separado, también si caes en una mina de hielo y tus ataques son congelados 5 turnos
+* **Command**: cada uno de los elementos en los combos predefinidos es un comando, en la función execute se llama al receiver, y es invocado en el combo o por separado, también si caes en una mina de hielo y tus ataques y defensas son congelados 5 turnos y estaran estos comandos en una pila
 
 
 notas:
