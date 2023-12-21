@@ -8,16 +8,24 @@ import main.application.driver.adapter.usecase.expression.ConjunctionExpression;
 import main.application.driver.adapter.usecase.expression.Context;
 import main.application.driver.adapter.usecase.expression.AlternativeExpression;
 import main.application.driver.adapter.usecase.expression.EnemyExpression;
+import main.application.driver.adapter.usecase.factory_enemies.EnemyBasicMethod;
+import main.application.driver.adapter.usecase.factory_enemies.EnemyHighMethod;
+import main.application.driver.adapter.usecase.factory_enemies.EnemyMiddleMethod;
+import main.application.driver.adapter.usecase.mission.BasicMission;
+import main.application.driver.adapter.usecase.mission.HighMission;
+import main.application.driver.adapter.usecase.mission.MiddleMission;
 import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.Expression;
 import main.application.driver.port.usecase.GameableUseCase;
 import main.application.driver.port.usecase.iterator.BoardCollection;
 import main.application.driver.port.usecase.iterator.PatternsIterator;
+import main.domain.model.ArmyFactory;
 import main.domain.model.CaretakerPlayer;
 import main.domain.model.Command;
 import main.domain.model.Enemy;
 import main.domain.model.FavorableEnvironment;
 import main.domain.model.Healable;
+import main.domain.model.Mission;
 import main.domain.model.Player;
 import main.domain.model.Player.MementoPlayer;
 import main.domain.model.command.Attack;
@@ -25,16 +33,19 @@ import main.domain.model.command.HealingPlayer;
 import main.domain.model.Visitor;
 
 public class Game implements GameableUseCase {
-	private final EnemyMethod enemyMethod;
+	private final ArmyFactory armyFactory;
+	private EnemyMethod enemyMethod;
 	private final Player player;
 	private BoardCollection<Enemy> board;
 	private PatternsIterator<Enemy> enemyIterator;
 	private FavorableEnvironment favorableEnvironments;
 	private final Frostbite frostbite;
 	private final CaretakerPlayer caretakerPlayer;
+	private Mission mission;
+	private int level;
 	
-	public Game(final EnemyMethod enemyMethod, final Player player) {
-		this.enemyMethod = enemyMethod;
+	public Game(final ArmyFactory armyFactory, final Player player) {
+		this.armyFactory = armyFactory;
 		this.player = player;
 		this.frostbite = new Frostbite();
 		this.caretakerPlayer = new CaretakerPlayer();
@@ -42,10 +53,40 @@ public class Game implements GameableUseCase {
 
 	@Override
 	public void startGame() {
-		final List<Enemy> enemies = this.enemyMethod.createEnemies();
-		this.board = new BigBoard(enemies);
+		this.enemyMethod = new EnemyBasicMethod(armyFactory);
+		this.board = new BigBoard(this.enemyMethod.createEnemies());
 		this.enemyIterator = this.board.getIterator();
+		this.mission = new BasicMission(this.board);
 		this.favorableEnvironments = this.enemyMethod.createFavorableEnvironments();
+		this.level = 1;
+	}
+
+	@Override
+	public boolean verifyAnUpLevel() {
+		if (this.mission.isMissionComplete()) {
+			if (this.level == 1) {
+				this.enemyMethod = new EnemyMiddleMethod(armyFactory);
+				this.board = new BigBoard(this.enemyMethod.createEnemies());
+				this.enemyIterator = this.board.getIterator();
+				this.mission = new MiddleMission(this.board);
+				this.favorableEnvironments = this.enemyMethod.createFavorableEnvironments();
+			} else {
+				this.enemyMethod = new EnemyHighMethod(armyFactory);
+				this.board = new BigBoard(this.enemyMethod.createEnemies());
+				this.enemyIterator = this.board.getIterator();
+				this.mission = new HighMission(this.board);
+				this.favorableEnvironments = this.enemyMethod.createFavorableEnvironments();
+			}
+			++this.level;
+			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean isGameCompleted() {
+		return this.level > 3;
 	}
 
 	@Override
@@ -146,7 +187,7 @@ public class Game implements GameableUseCase {
         }
 		this.enemyIterator.reset();
 		
-        return "B=bomba,M=multiples disparos,F=fortaleza,V=veneno,A=aire,N=naval,S=soldado,E=escuadrón,M=maestro\r\n"
+        return "B=bomba,M=multiples disparos,F=fortaleza,V=veneno,A=aire,N=naval,S=soldado,E=escuadrón,J=Jefe\r\n"
         		+ "\r\n"
         		+ "tablero:{fila-columna:avatar:vida:ataque}\r\n"
         		+ "\r\n"

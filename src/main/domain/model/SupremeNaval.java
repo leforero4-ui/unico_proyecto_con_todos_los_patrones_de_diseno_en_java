@@ -20,7 +20,7 @@ public class SupremeNaval extends Supreme {
 
 	@Override
 	public String getAvatar(final String prefix) {
-		return prefix + this.skill.getIdentifier() + "MN|";
+		return prefix + this.skill.getIdentifier() + "JN|";
 	}
 
 }

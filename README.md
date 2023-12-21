@@ -4,7 +4,7 @@ patrones de diseño:
 
 creacionales
 
-* **Builder**: creación de player, ayuda cuando es inmutable osea que tiene sus propiedades finales, y muchos de sus parametros pueden ser null porque tendría varios constructores para evitar el parámetro null
+* **Builder**: creación de player, ayuda cuando es inmutable osea que tiene sus propiedades finales, y muchos de sus parámetros pueden ser null porque tendría varios constructores para evitar el parámetro null en el constructor
 * **Factory method**: lógica de crear villanos por niveles
 * **Singleton**: para crear el villano supremo, debe ser único
 * **Prototype**: para clonar los soldados cuando se están creando los villanos por niveles
@@ -13,7 +13,7 @@ creacionales
 
 estructurales
 
-* **Composite**: crear infanteria con sus escuadrones y soldados que ataquen al mismo tiempo
+* **Composite**: crear estructura de infanteria con sus escuadrones y soldados que ataquen al mismo tiempo
 * **Flyweight**: compartir la ropa de los soldados (estado intrinseco(flyweight) = ropa / estado extrinseco = vida)
 * **Facade**: interface expuesta a las aplicaciones ocultando las complejidades del juego, logros, y estadisticas, en este caso la clase Controller.java
 * **Adapter**: usar librerias externas como Lanterna para dibujar en consola
@@ -41,6 +41,7 @@ alternativa ::= enemigo '|' enemigo
 * **Command**: los invocadores pueden ser un combo o un ataque/sanación directo, en la función execute se llama al receiver,  
 los comandos pueden ser invocados desde diferentes partes: en un combo y directamente al ejecutar el ataque o la sanación, también si caes en una mina de hielo tus ataques y sanaciones seran congelados 5 turnos y estaran estos comandos en una pila esperando a ser ejecutados después de los 5 turnos
 * **Memento**: hacer puntos de restauración
+* **Template method**: difinir las misiones a completar en los niveles
 
 
 notas:

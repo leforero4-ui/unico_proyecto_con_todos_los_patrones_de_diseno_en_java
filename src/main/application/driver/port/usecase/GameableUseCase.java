@@ -14,4 +14,6 @@ public interface GameableUseCase {
 	String getEnemies(String stringExpression);
 	void healing();
 	boolean doOrRestoreBackup(String inputString);
+	boolean isGameCompleted();
+	boolean verifyAnUpLevel();
 }

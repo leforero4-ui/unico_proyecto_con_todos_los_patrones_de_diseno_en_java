@@ -36,7 +36,7 @@ public abstract class Supreme extends Enemy {
 			protective.protect(this);
 		});
 		
-		return protectorsTemp.size();
+		return attack - protectorsTemp.size();
 	}
 
 }

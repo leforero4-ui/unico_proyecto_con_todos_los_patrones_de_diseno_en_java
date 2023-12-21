@@ -20,7 +20,7 @@ public class SupremeAir extends Supreme {
 
 	@Override
 	public String getAvatar(final String prefix) {
-		return prefix + this.skill.getIdentifier() + "MA|";
+		return prefix + this.skill.getIdentifier() + "JA|";
 	}
 
 }

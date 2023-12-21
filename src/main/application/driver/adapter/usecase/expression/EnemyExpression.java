@@ -14,7 +14,7 @@ public class EnemyExpression implements Expression {
 		case "naval" -> "N";
 		case "fortaleza" -> "F";
 		case "escuadron", "escuadrón" -> "E";
-		case "supremo", "maestro" -> "M";
+		case "supremo", "maestro", "jefe" -> "J";
 		default -> word.toUpperCase();
 		};
 	}

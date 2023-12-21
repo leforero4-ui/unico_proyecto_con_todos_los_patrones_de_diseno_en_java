@@ -2,11 +2,7 @@ package main.infrastructure.driver.adapter.controller;
 
 import main.application.driven.port.provider.Drawable;
 import main.application.driver.adapter.usecase.Game;
-import main.application.driver.adapter.usecase.factory_enemies.EnemyBasicMethod;
-import main.application.driver.adapter.usecase.factory_enemies.EnemyHighMethod;
-import main.application.driver.adapter.usecase.factory_enemies.EnemyMiddleMethod;
 import main.application.driver.port.controller.Controller;
-import main.application.driver.port.usecase.EnemyMethod;
 import main.application.driver.port.usecase.GameableUseCase;
 import main.domain.model.ArmyFactory;
 import main.domain.model.Player;
@@ -23,33 +19,16 @@ public class ControllerImpl implements Controller {
 	
 	public ControllerImpl() {
 		this.drawable = new LanternaDrawable();
-		if("1".equalsIgnoreCase(this.drawable.in("naval oprima: 1\r\nair oprima: cualquier tecla"))) {
-			this.drawable.out("naval:");
+		if("1".equalsIgnoreCase(this.drawable.in("naval oprima: 1\r\naéreo oprima: cualquier tecla"))) {
+			this.drawable.out("naval elegido");
 			this.armyFactory = new ArmyNavalFactory();
 		} else {
-			this.drawable.out("air:");
+			this.drawable.out("aéreo elegido");
 			this.armyFactory = new ArmyAirFactory();
 		}
-		this.setGameSetting();
-	}
-	
-	private void setGameSetting() {
-		final EnemyMethod enemyMethod = switch (this.drawable.in("nivel básico: 1\r\nnivel medio: 2\r\nnivel alto oprima: cualquier tecla")) {
-			case "1" -> {
-				this.drawable.out("básico:");
-				yield new EnemyBasicMethod(armyFactory);
-			}
-			case "2" -> {
-				this.drawable.out("medio:");
-				yield new EnemyMiddleMethod(armyFactory);
-			}
-			default -> {
-				this.drawable.out("alto:");
-				yield new EnemyHighMethod(armyFactory);
-			}
-		};
+		
 		this.createPlayer();
-		this.gameableUseCase = new Game(enemyMethod, this.player);
+		this.gameableUseCase = new Game(this.armyFactory, this.player);
 	}
 	
 	private void createPlayer() {
@@ -126,6 +105,14 @@ public class ControllerImpl implements Controller {
 					
 					final boolean isEnemyEliminated = isSuccessfulAttackAndIsEnemyEliminated[1];
 					this.drawable.out(isEnemyEliminated ? "Enemigo eliminado\r\n" : "Se ha lanzado contraataque\r\n");
+			
+					if (this.gameableUseCase.verifyAnUpLevel()) {
+						if (this.gameableUseCase.isGameCompleted()) {
+							this.drawable.out("Felicidades!!! ha completado el juego\r\n");
+						} else {
+							this.drawable.out("Felicidades! ha subido un nivel\r\n");
+						}
+					}
 				} else if (inputString.startsWith("backup:")) {
 					final String textSuccessfulBackup = this.gameableUseCase.doOrRestoreBackup(inputString) ? "satisfactorio" : "fallido";
 					this.drawable.out(this.gameableUseCase.getStringAvatarPlayer() + "\r\nBackup " + textSuccessfulBackup);
@@ -133,7 +120,7 @@ public class ControllerImpl implements Controller {
 					this.drawable.out(this.gameableUseCase.getEnemies(inputString));
 				}
 			}
-		} while (inputString != null && !inputString.equalsIgnoreCase("99-99") && this.player.getLife() > 0);
+		} while (inputString != null && !inputString.equalsIgnoreCase("99-99") && this.player.getLife() > 0 && !this.gameableUseCase.isGameCompleted());
 		
 		this.drawable.out("fin del juego");
 	}
