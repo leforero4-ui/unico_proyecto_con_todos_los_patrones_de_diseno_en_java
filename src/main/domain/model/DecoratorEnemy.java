@@ -9,6 +9,31 @@ public abstract class DecoratorEnemy extends Enemy {
 	}
 
 	@Override
+	public int getLife() {
+		return this.enemy.getLife();
+	}
+
+	@Override
+	public int getAttackLevel(boolean isAttacking) {
+		return this.enemy.getAttackLevel(isAttacking);
+	}
+
+	@Override
+	public int getCounterAttackLevel(final int attackLevelReceived) {
+		return this.enemy.getCounterAttackLevel(attackLevelReceived);
+	}
+
+	@Override
+	public void setStatus(final Status status) {
+		this.enemy.setStatus(status);
+	}
+	
+	@Override
+	public void protect(final Supreme theProtected) {
+		this.enemy.protect(theProtected);
+	}
+
+	@Override
 	public String getAvatar(String prefix) {
 		return this.enemy.getAvatar(prefix);
 	}

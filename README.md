@@ -41,7 +41,7 @@ alternativa ::= enemigo '|' enemigo
 * **Command**: los invocadores pueden ser un combo o un ataque/sanación directo, en la función execute se llama al receiver,  
 los comandos pueden ser invocados desde diferentes partes: en un combo y directamente al ejecutar el ataque o la sanación, también si caes en una mina de hielo tus ataques y sanaciones seran congelados 5 turnos y estaran estos comandos en una pila esperando a ser ejecutados después de los 5 turnos
 * **Memento**: hacer puntos de restauración
-* **Template method**: difinir las misiones a completar en los niveles
+* **Template method**: definir las misiones a completar en los niveles
 
 
 notas:
